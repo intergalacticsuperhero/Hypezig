@@ -12,6 +12,9 @@ import java.util.List;
 @Dao
 public interface EventDao {
 
+    @Query("SELECT * from event WHERE eventId = :eventId")
+    Event getByEventId(int eventId);
+
     @Query("SELECT * from event ORDER by date, locationName, category")
     List<Event> getAll();
 
@@ -20,6 +23,8 @@ public interface EventDao {
 
     @Query("SELECT * from event ORDER by locationName, date, category")
     List<Event> getAllOrderedByLocation();
+
+
 
     @Insert
     void insertAll(Event... events);

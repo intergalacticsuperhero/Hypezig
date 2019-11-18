@@ -1,17 +1,18 @@
 package com.example.javaapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
 import com.example.javaapp.tasks.ReadSortedByCategory;
 import com.example.javaapp.tasks.ReadSortedByDate;
@@ -33,16 +34,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        Button b1 = (Button) findViewById(R.id.button);
-
-        b1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ReadSortedByDate(getApplicationContext(), events, adapter).execute();
-            }
-        });
 
         Button b2 = (Button) findViewById(R.id.button2);
 
@@ -76,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         initRecyclerView();
+
+        ((RadioButton) findViewById(R.id.radioButtonTime)).toggle();
     }
 
     private void initRecyclerView() {

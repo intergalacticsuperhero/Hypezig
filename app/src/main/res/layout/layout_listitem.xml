@@ -3,6 +3,14 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:id="@+id/parent_layout">
 
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MON"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="12dp"
+        android:textStyle="bold" />
 
 
     <TextView
@@ -11,7 +19,8 @@
         android:layout_height="wrap_content"
         android:text="01.01."
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/day"
         android:textStyle="bold" />
 
     <TextView
@@ -28,10 +37,14 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="18dp"
         android:layout_marginTop="6dp"
-        android:layout_toRightOf="@+id/date"
+        android:layout_marginRight="12dp"
+        android:layout_toRightOf="@+id/day"
         android:text="Titel einer Veranstaltung"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
 
@@ -41,32 +54,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_marginTop="3dp"
-        android:layout_toRightOf="@+id/date"
-        android:layout_marginLeft="12dp"
-        android:text="Category"
-        android:textStyle="italic" />
-
-    <TextView
-        android:id="@+id/subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/category"
-        android:layout_toRightOf="@+id/date"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="12dp"
-        android:text="Untertitel" />
+        android:layout_toRightOf="@+id/day"
+        android:layout_marginLeft="18dp"
+        android:text="Category" />
 
 
     <TextView
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/subtitle"
-        android:layout_marginLeft="12dp"
+        android:layout_below="@+id/category"
+        android:layout_marginLeft="18dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="6dp"
-        android:layout_toRightOf="@+id/date"
-        android:text="Veranstaltungsort" />
+        android:layout_toRightOf="@+id/day"
+        android:text="VERANSTALTUNSORT" />
 
     <View
         android:id="@+id/divider"
