@@ -26,8 +26,9 @@ public class Event {
     public String locationName;
     public List<String> tags;
     public String imageURL;
+    public String category;
 
-    public Event(String title, String subtitle, String details, Date date, String locationName, List<String> tags, String imageURL) {
+    public Event(String title, String subtitle, String details, Date date, String locationName, List<String> tags, String imageURL, String category) {
         this.title = title;
         this.subtitle = subtitle;
         this.details = details;
@@ -35,6 +36,7 @@ public class Event {
         this.locationName = locationName;
         this.tags = tags;
         this.imageURL = imageURL;
+        this.category = category;
     }
 
     @NonNull

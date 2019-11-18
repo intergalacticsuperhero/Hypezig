@@ -40,6 +40,8 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
 
             AppDatabase db = AppDatabase.getInstance(context);
             Event[] newEvents = localResult.getEvents().toArray(new Event[0]);
+
+            db.eventDao().deleteAll();
             db.eventDao().insertAll(newEvents);
 
             System.out.println("Saved.");

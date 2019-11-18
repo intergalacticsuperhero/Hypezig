@@ -41,6 +41,7 @@ public class KreuzerScraper {
                 Elements titleElement = event.select("h2");
                 Elements tagElements = titleElement.select("strong");
 
+
                 String title;
                 List<String> tags = new LinkedList<>();
 
@@ -60,6 +61,8 @@ public class KreuzerScraper {
                 Elements locationTimes = event.select(".whenAndWhere").first().children();
                 String imageURL = event.select("img").attr("src");
                 imageURL = !imageURL.isEmpty() ? "https://kreuzer-leipzig.de" + imageURL : null;
+
+                String category = event.previousElementSiblings().select("aside h3").first().text();
 
                 for (int i = 0; i < locationTimes.size(); i+=2) {
 
@@ -85,7 +88,7 @@ public class KreuzerScraper {
 
                         while (m.find()) {
                             Date eventDate = (new SimpleDateFormat("dd.MM.yyyy HH:mm")).parse(dateAsString + " " + m.group());
-                            Event newEvent = new Event(title, subtitle, details, eventDate, locationName, tags, imageURL);
+                            Event newEvent = new Event(title, subtitle, details, eventDate, locationName, tags, imageURL, category);
                             localResultEvents.add(newEvent);
                         }
                     }
