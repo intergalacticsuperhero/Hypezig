@@ -29,4 +29,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.room:room-runtime:2.2.1'
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 }

@@ -1,87 +1,47 @@
 package com.example.javaapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.example.javaapp.models.Event;
-import com.example.javaapp.models.Location;
-import com.example.javaapp.models.ScrapingResult;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.example.javaapp.tasks.ReadEventsFromDatabase;
+import com.example.javaapp.tasks.ReloadEventsFromInternet;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    TextView texx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button b = (Button) findViewById(R.id.button);
 
-        texx = (TextView) findViewById(R.id.textView);
+        Button b1 = (Button) findViewById(R.id.button);
 
-        b.setOnClickListener(new OnClickListener() {
+        b1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new doit().execute();
+                new ReadEventsFromDatabase(getApplicationContext()).execute();
+            }
+        });
+
+        Button b2 = (Button) findViewById(R.id.button2);
+
+        b2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ReloadEventsFromInternet(getApplicationContext()).execute();
             }
         });
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-    public class doit extends AsyncTask<Void, Void, Void> {
-
-        String eventLabels;
-
-        HashMap<String, Location> locations;
-        HashSet<Event> events;
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-
-            try {
-                ScrapingResult localResult = KreuzerScraper.fetchEvents();
-
-                System.out.println(localResult.getEvents());
-                System.out.println(localResult.getLocations());
-            }
-            catch(Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            texx.setText(eventLabels);
-        }
     }
 }
 

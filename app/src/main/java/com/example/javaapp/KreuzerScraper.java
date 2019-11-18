@@ -85,7 +85,7 @@ public class KreuzerScraper {
 
                         while (m.find()) {
                             Date eventDate = (new SimpleDateFormat("dd.MM.yyyy HH:mm")).parse(dateAsString + " " + m.group());
-                            Event newEvent = new Event(title, subtitle, details, eventDate, location, tags, imageURL);
+                            Event newEvent = new Event(title, subtitle, details, eventDate, locationName, tags, imageURL);
                             localResultEvents.add(newEvent);
                         }
                     }
