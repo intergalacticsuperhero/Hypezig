@@ -1,6 +1,5 @@
 package com.example.javaapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,20 +12,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.javaapp.models.Event;
+import com.example.javaapp.models.Model;
+import com.example.javaapp.models.filters.PassthroughFilter;
+import com.example.javaapp.models.filters.TodayFilter;
+import com.example.javaapp.models.filters.WeekFilter;
+import com.example.javaapp.models.filters.WeekendFilter;
 import com.example.javaapp.tasks.ReadSortedByCategory;
 import com.example.javaapp.tasks.ReadSortedByDate;
 import com.example.javaapp.tasks.ReadSortedByLocation;
 import com.example.javaapp.tasks.ReloadEventsFromInternet;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private ArrayList<Event> events = new ArrayList<>();
     private RecyclerViewAdapter adapter;
 
 
@@ -50,15 +50,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+
                 switch(checkedId) {
                     case R.id.radioButtonTime:
-                        new ReadSortedByDate(getApplicationContext(), events, adapter).execute();
+                        new ReadSortedByDate(getApplicationContext(), adapter).execute();
                         break;
                     case R.id.radioButtonCategory:
-                        new ReadSortedByCategory(getApplicationContext(), events, adapter).execute();
+                        new ReadSortedByCategory(getApplicationContext(), adapter).execute();
                         break;
                     case R.id.radioButtonLocation:
-                        new ReadSortedByLocation(getApplicationContext(), events, adapter).execute();
+                        new ReadSortedByLocation(getApplicationContext(), adapter).execute();
                         break;
                     default:
                         System.out.println("this should never happen");
@@ -66,15 +67,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        RadioGroup r2 = (RadioGroup) findViewById(R.id.radioGroupDates);
+        r2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId) {
+                    case R.id.radioButtonToday:
+                        Model.getInstance().setFilterStrategy(new TodayFilter());
+                        break;
+                    case R.id.radioButtonWeekend:
+                        Model.getInstance().setFilterStrategy(new WeekendFilter());
+                        break;
+                    case R.id.radioButtonNextWeek:
+                        Model.getInstance().setFilterStrategy(new WeekFilter());
+                        break;
+                    case R.id.radioButtonEverything:
+                        Model.getInstance().setFilterStrategy(new PassthroughFilter());
+                        break;
+                    default:
+                        System.out.println("this should never happen");
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         initRecyclerView();
 
         ((RadioButton) findViewById(R.id.radioButtonTime)).toggle();
+        ((RadioButton) findViewById(R.id.radioButtonToday)).toggle();
     }
+
+
 
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter(events, this);
+        adapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -84,5 +114,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
 
     }
+
 }
 

@@ -1,5 +1,7 @@
 package com.example.javaapp;
 
+import android.text.format.DateUtils;
+
 import com.example.javaapp.models.Event;
 import com.example.javaapp.models.Location;
 import com.example.javaapp.models.ScrapingResult;
@@ -32,10 +34,26 @@ public class KreuzerScraper {
         Pattern patternDate = Pattern.compile("(\\d{2})\\.(\\d{2})\\.");
         Pattern patternTime = Pattern.compile("(\\d{2})\\:(\\d{2})");
 
-        String thisYear = (new SimpleDateFormat("yyyy")).format(Calendar.getInstance().getTime());
+        Date today = Calendar.getInstance().getTime();
+
+        Calendar calendarNextMonth = Calendar.getInstance();
+        calendarNextMonth.add(Calendar.MONTH, 1);
+        Date nextMonth = calendarNextMonth.getTime();
+
+        String thisYear = (new SimpleDateFormat("yyyy")).format(today);
+
+        SimpleDateFormat searchDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
         try {
-            Document doc = Jsoup.connect("https://kreuzer-leipzig.de/termine/").get();
+            String url = "https://kreuzer-leipzig.de/termine/"
+                    + "?datumVon="
+                    + searchDateFormat.format(today)
+                    + "&datumBis="
+                    + searchDateFormat.format(nextMonth);
+
+            System.out.println(url);
+
+            Document doc = Jsoup.connect(url).get();
 
             for (Element event : doc.select("article.termin")) {
                 Elements titleElement = event.select("h2");
@@ -58,7 +76,12 @@ public class KreuzerScraper {
                 String subtitle = event.select("p.details").text();
                 Elements moreText = event.select(".moreText p");
                 String details = moreText.text();
-                Elements locationTimes = event.select(".whenAndWhere").first().children();
+
+                Element whenAndWhere = event.select(".whenAndWhere").first();
+
+                if (whenAndWhere == null) continue;
+                Elements locationTimes = whenAndWhere.children();
+
                 String imageURL = event.select("img").attr("src");
                 imageURL = !imageURL.isEmpty() ? "https://kreuzer-leipzig.de" + imageURL : null;
 

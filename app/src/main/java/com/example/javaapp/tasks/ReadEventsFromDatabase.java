@@ -5,18 +5,17 @@ import android.os.AsyncTask;
 
 import com.example.javaapp.RecyclerViewAdapter;
 import com.example.javaapp.models.Event;
+import com.example.javaapp.models.Model;
 
 import java.util.List;
 
 public abstract class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
     Context context;
-    List<Event> events;
     RecyclerViewAdapter adapter;
 
-    public ReadEventsFromDatabase(Context context, List<Event> events, RecyclerViewAdapter adapter) {
+    public ReadEventsFromDatabase(Context context, RecyclerViewAdapter adapter) {
         this.context = context;
-        this.events = events;
         this.adapter = adapter;
     }
 
@@ -27,8 +26,12 @@ public abstract class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void>
 
         try {
             List<Event> eventsFromDatabase = getSortedData();
-            events.clear();
-            events.addAll(eventsFromDatabase);
+
+            List<Event> orderedEvents = Model.getInstance().getOrderedEvents();
+            orderedEvents.clear();
+            orderedEvents.addAll(eventsFromDatabase);
+
+            Model.getInstance().applyFilter();
         }
         catch(Exception e) {
             e.printStackTrace();

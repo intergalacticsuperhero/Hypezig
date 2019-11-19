@@ -2,29 +2,23 @@ package com.example.javaapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.javaapp.models.Event;
+import com.example.javaapp.models.Model;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
-
-    private ArrayList<Event> events;
     private Context mContext;
 
     SimpleDateFormat dayOfWeek = new SimpleDateFormat("E");
@@ -32,8 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     SimpleDateFormat hours = new SimpleDateFormat("HH:mm");
 
 
-    public RecyclerViewAdapter(ArrayList<Event> events, Context mContext) {
-        this.events = events;
+    public RecyclerViewAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -47,9 +40,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called");
-
-        final Event e = events.get(position);
+        final Event e = Model.getInstance().getFilteredEvents().get(position);
 
         holder.day.setText(dayOfWeek.format(e.date).toUpperCase());
         holder.title.setText(e.title);
@@ -73,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return Model.getInstance().getFilteredEvents().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

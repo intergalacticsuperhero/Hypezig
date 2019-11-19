@@ -19,7 +19,8 @@ import java.text.SimpleDateFormat;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
-    private Event event;
+    private int eventId;
+    private Event event = null;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd.MM.yyyy 'um' HH:mm 'Uhr'");
 
     @Override
@@ -30,6 +31,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle("Details");
+        eventId = getIntent().getExtras().getInt("eventId");
         (new LoadEvent()).execute();
     }
 
@@ -45,12 +47,15 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     private void updateViews() {
+        if (event == null) return;
+
         ((TextView) findViewById(R.id.category)).setText(event.category);
         ((TextView) findViewById(R.id.title)).setText(event.title);
         ((TextView) findViewById(R.id.subtitle)).setText(event.subtitle);
         ((TextView) findViewById(R.id.date)).setText(dateFormat.format(event.date));
         ((TextView) findViewById(R.id.location)).setText(event.locationName.toUpperCase());
         ((TextView) findViewById(R.id.details)).setText(event.details);
+
         if (event.imageURL != null) {
             new DownloadImageTask((ImageView) findViewById(R.id.imageView)).execute(event.imageURL);
         }
@@ -61,11 +66,13 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            int eventId = getIntent().getExtras().getInt("eventId");
             event = AppDatabase.getInstance(getApplicationContext()).eventDao().getByEventId(eventId);
-            updateViews();
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            updateViews();
         }
     }
 

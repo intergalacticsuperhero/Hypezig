@@ -28,23 +28,14 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-
         try {
-            System.out.println("Loading...");
-
             ScrapingResult localResult = KreuzerScraper.fetchEvents();
-
-            System.out.println(localResult.getEvents());
-            System.out.println(localResult.getLocations());
-
 
             AppDatabase db = AppDatabase.getInstance(context);
             Event[] newEvents = localResult.getEvents().toArray(new Event[0]);
 
             db.eventDao().deleteAll();
             db.eventDao().insertAll(newEvents);
-
-            System.out.println("Saved.");
         }
         catch(Exception e) {
             e.printStackTrace();
