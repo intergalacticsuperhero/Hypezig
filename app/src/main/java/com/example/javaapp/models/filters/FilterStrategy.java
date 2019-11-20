@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface FilterStrategy {
 
-    public void applyFilter(List<Event> input, List<Event> output);
+    void applyFilter(List<Event> input, List<Event> output);
 }

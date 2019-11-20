@@ -15,9 +15,10 @@ import com.example.javaapp.models.filters.PassthroughFilter;
 import com.example.javaapp.models.filters.TodayFilter;
 import com.example.javaapp.models.filters.WeekFilter;
 import com.example.javaapp.models.filters.WeekendFilter;
-import com.example.javaapp.tasks.ReadSortedByCategory;
-import com.example.javaapp.tasks.ReadSortedByDate;
-import com.example.javaapp.tasks.ReadSortedByLocation;
+import com.example.javaapp.models.queries.SortByCategory;
+import com.example.javaapp.models.queries.SortByDate;
+import com.example.javaapp.models.queries.SortByLocation;
+import com.example.javaapp.tasks.ReadEventsFromDatabase;
 import com.example.javaapp.tasks.ReloadEventsFromInternet;
 
 
@@ -51,17 +52,19 @@ public class MainActivity extends AppCompatActivity {
 
                 switch(checkedId) {
                     case R.id.radioButtonTime:
-                        new ReadSortedByDate(getApplicationContext(), adapter).execute();
+                        Model.getInstance().setQueryStrategy(new SortByDate());
                         break;
                     case R.id.radioButtonCategory:
-                        new ReadSortedByCategory(getApplicationContext(), adapter).execute();
+                        Model.getInstance().setQueryStrategy(new SortByCategory());
                         break;
                     case R.id.radioButtonLocation:
-                        new ReadSortedByLocation(getApplicationContext(), adapter).execute();
+                        Model.getInstance().setQueryStrategy(new SortByLocation());
                         break;
                     default:
                         System.out.println("this should never happen");
                 }
+
+                (new ReadEventsFromDatabase(getApplicationContext(), adapter)).execute();
             }
         });
 
@@ -97,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
         ((RadioButton) findViewById(R.id.radioButtonToday)).toggle();
     }
 
-
-
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -110,8 +111,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
     }
-
 }
 

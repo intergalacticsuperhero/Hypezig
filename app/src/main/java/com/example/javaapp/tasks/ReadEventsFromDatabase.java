@@ -6,26 +6,26 @@ import android.os.AsyncTask;
 import com.example.javaapp.RecyclerViewAdapter;
 import com.example.javaapp.models.Event;
 import com.example.javaapp.models.Model;
+import com.example.javaapp.models.queries.QueryStrategy;
 
 import java.util.List;
 
-public abstract class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
+public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
     Context context;
     RecyclerViewAdapter adapter;
+
 
     public ReadEventsFromDatabase(Context context, RecyclerViewAdapter adapter) {
         this.context = context;
         this.adapter = adapter;
     }
 
-    protected abstract List<Event> getSortedData();
-
     @Override
     protected Void doInBackground(Void... voids) {
 
         try {
-            List<Event> eventsFromDatabase = getSortedData();
+            List<Event> eventsFromDatabase = Model.getInstance().getQueryStrategy().getSortedData(context);
 
             List<Event> orderedEvents = Model.getInstance().getOrderedEvents();
             orderedEvents.clear();
@@ -42,8 +42,6 @@ public abstract class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void>
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-
         adapter.notifyDataSetChanged();
     }
 }
