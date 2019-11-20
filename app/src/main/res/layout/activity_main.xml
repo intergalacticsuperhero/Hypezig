@@ -7,89 +7,95 @@
     tools:context=".MainActivity">
 
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/radioButtonTime"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="Zeit" />
-
-        <RadioButton
-            android:id="@+id/radioButtonCategory"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="Kategorie" />
-
-        <RadioButton
-            android:id="@+id/radioButtonLocation"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="Ort" />
-    </RadioGroup>
-
-
-
-    <RadioGroup
-        android:id="@+id/radioGroupDates"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
-
-        <RadioButton
-            android:id="@+id/radioButtonToday"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Heute" />
-
-        <RadioButton
-            android:id="@+id/radioButtonWeekend"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Sa/So" />
-
-        <RadioButton
-            android:id="@+id/radioButtonNextWeek"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Woche" />
-
-        <RadioButton
-            android:id="@+id/radioButtonEverything"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="Alles" />
-    </RadioGroup>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="557dp"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupDates" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Neu herunterladen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radioButtonTime"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Zeit" />
+
+            <RadioButton
+                android:id="@+id/radioButtonCategory"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Kategorie" />
+
+            <RadioButton
+                android:id="@+id/radioButtonLocation"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Ort" />
+        </RadioGroup>
+
+
+        <RadioGroup
+            android:id="@+id/radioGroupDates"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+            <RadioButton
+                android:id="@+id/radioButtonToday"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Heute" />
+
+            <RadioButton
+                android:id="@+id/radioButtonWeekend"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Sa/So" />
+
+            <RadioButton
+                android:id="@+id/radioButtonNextWeek"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Woche" />
+
+            <RadioButton
+                android:id="@+id/radioButtonEverything"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="Alles" />
+        </RadioGroup>
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/layout_listitem"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
 
 
 

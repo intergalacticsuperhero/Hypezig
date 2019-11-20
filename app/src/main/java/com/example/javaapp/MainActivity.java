@@ -2,15 +2,13 @@ package com.example.javaapp;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.javaapp.models.Model;
 import com.example.javaapp.models.filters.PassthroughFilter;
@@ -35,17 +33,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button b2 = (Button) findViewById(R.id.button2);
+        final SwipeRefreshLayout layout = findViewById(R.id.refreshLayout);
 
-        b2.setOnClickListener(new OnClickListener() {
+        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                new ReloadEventsFromInternet(getApplicationContext()).execute();
+            public void onRefresh() {
+                layout.setRefreshing(true);
+                new ReloadEventsFromInternet(getApplicationContext(), layout).execute();
             }
         });
 
-
-        RadioGroup r = (RadioGroup) findViewById(R.id.radioGroup);
+        RadioGroup r = findViewById(R.id.radioGroup);
         r.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
@@ -67,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RadioGroup r2 = (RadioGroup) findViewById(R.id.radioGroupDates);
+        RadioGroup r2 = findViewById(R.id.radioGroupDates);
         r2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override

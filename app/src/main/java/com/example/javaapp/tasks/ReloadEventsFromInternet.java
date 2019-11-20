@@ -3,26 +3,21 @@ package com.example.javaapp.tasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.javaapp.KreuzerScraper;
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
-import com.example.javaapp.models.Location;
 import com.example.javaapp.models.ScrapingResult;
-
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
 
     Context context;
-    String eventLabels;
+    SwipeRefreshLayout layout;
 
-    HashMap<String, Location> locations;
-    HashSet<Event> events;
-
-
-    public ReloadEventsFromInternet(Context context) {
+    public ReloadEventsFromInternet(Context context, SwipeRefreshLayout layout) {
         this.context = context;
+        this.layout = layout;
     }
 
     @Override
@@ -47,5 +42,6 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+        layout.setRefreshing(false);
     }
 }
