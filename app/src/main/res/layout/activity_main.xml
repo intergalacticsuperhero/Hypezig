@@ -14,45 +14,12 @@
         android:orientation="vertical">
 
         <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/radioButtonTime"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="Zeit" />
-
-            <RadioButton
-                android:id="@+id/radioButtonCategory"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="Kategorie" />
-
-            <RadioButton
-                android:id="@+id/radioButtonLocation"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="Ort" />
-        </RadioGroup>
-
-
-        <RadioGroup
             android:id="@+id/radioGroupDates"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioButtonToday"

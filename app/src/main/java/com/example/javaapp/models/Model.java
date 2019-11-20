@@ -1,12 +1,9 @@
 package com.example.javaapp.models;
 
-import android.content.Context;
-
 import com.example.javaapp.models.filters.FilterStrategy;
 import com.example.javaapp.models.filters.PassthroughFilter;
 import com.example.javaapp.models.queries.QueryStrategy;
 import com.example.javaapp.models.queries.SortByDate;
-import com.example.javaapp.tasks.ReadEventsFromDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
