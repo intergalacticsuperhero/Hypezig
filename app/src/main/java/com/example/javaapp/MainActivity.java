@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -30,6 +28,10 @@ import com.example.javaapp.models.queries.SortByLocation;
 import com.example.javaapp.tasks.ReadEventsFromDatabase;
 import com.example.javaapp.tasks.ReloadEventsFromInternet;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,11 +47,18 @@ public class MainActivity extends AppCompatActivity {
     };
     int queryWhich = 0;
 
+    String[] categoryLabels = new String[] { "Theater", "Kino", "Show", "Party", "Musik",
+            "Clubbing", "Tanzen", "Kunst", "Literatur", "Vorträge & Diskussionen", "etc.",
+            "Kinder & Familie", "Umland", "Gastro-Events", "Lokale Radios", "Nature & Umwelt" };
+    boolean[] categoriesSelected = new boolean[categoryLabels.length];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Arrays.sort(categoryLabels);
 
         final SwipeRefreshLayout layout = findViewById(R.id.refreshLayout);
 
@@ -60,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 new ReloadEventsFromInternet(getApplicationContext(), layout).execute();
             }
         });
-
 
         RadioGroup r2 = findViewById(R.id.radioGroupDates);
         r2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -120,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item_sort:
                 showAlertSortMenu();
                 break;
+            case R.id.item_filter:
+                showAlertFilterMenu();
+                break;
             default:
                 System.out.println("this should never happen");
         }
@@ -132,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
         builder.setTitle("Sortieren nach");
-        builder.setIcon(R.drawable.icon_sort);
         builder.setSingleChoiceItems(queryLabels, queryWhich, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -147,6 +157,46 @@ public class MainActivity extends AppCompatActivity {
         builder.setNeutralButton("Abbrechen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {}
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showAlertFilterMenu() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        final boolean[] localCategoriesSelected = categoriesSelected.clone();
+
+        builder.setTitle("Zeige nur");
+        builder.setMultiChoiceItems(categoryLabels, localCategoriesSelected, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                localCategoriesSelected[which] = isChecked;
+            }
+        });
+        builder.setNeutralButton("Abbrechen", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                categoriesSelected = localCategoriesSelected;
+
+                Set<String> categoryLabelsSelected = new HashSet<>();
+                for (int i = 0; i < localCategoriesSelected.length; i++) {
+                    if (localCategoriesSelected[i]) {
+                        categoryLabelsSelected.add(categoryLabels[i]);
+                    }
+                }
+
+                Model.getInstance().getCategoryFilter().setCategories(categoryLabelsSelected);
+                Model.getInstance().applyFilter();
+                adapter.notifyDataSetChanged();
+
+                dialog.dismiss();
+            }
         });
 
         AlertDialog dialog = builder.create();

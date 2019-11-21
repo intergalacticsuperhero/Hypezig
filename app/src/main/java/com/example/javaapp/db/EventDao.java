@@ -24,6 +24,8 @@ public interface EventDao {
     @Query("SELECT * from event ORDER by locationName, date, category")
     List<Event> getAllOrderedByLocation();
 
+    @Query("SELECT DISTINCT category FROM event")
+    List<String> getDistinctCategories();
 
 
     @Insert

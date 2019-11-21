@@ -6,6 +6,7 @@ import com.example.javaapp.models.Event;
 import com.example.javaapp.models.Location;
 import com.example.javaapp.models.ScrapingResult;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -53,9 +54,17 @@ public class KreuzerScraper {
 
             System.out.println(url);
 
-            Document doc = Jsoup.connect(url).get();
+            Connection connection = Jsoup.connect(url);
+            connection.maxBodySize(0);
+            Document doc = connection.timeout(60 * 1000).get();
 
-            for (Element event : doc.select("article.termin")) {
+            Elements events = doc.select("article.termin");
+            System.out.println(events.size() + " events found.");
+            int eventCounter = 1;
+
+            for (Element event : events) {
+                System.out.println("Processing event " + eventCounter + "...");
+                eventCounter++;
                 Elements titleElement = event.select("h2");
                 Elements tagElements = titleElement.select("strong");
 
@@ -79,7 +88,10 @@ public class KreuzerScraper {
 
                 Element whenAndWhere = event.select(".whenAndWhere").first();
 
-                if (whenAndWhere == null) continue;
+                if (whenAndWhere == null) {
+                    System.out.println(doc.text());
+                    throw (new Exception("No .whenAndWhere found"));
+                }
                 Elements locationTimes = whenAndWhere.children();
 
                 String imageURL = event.select("img").attr("src");
@@ -117,6 +129,8 @@ public class KreuzerScraper {
                     }
                 }
             }
+
+            System.out.println("Import complete.");
 
             localResultLocations = new ArrayList<>(locations.values());
         }

@@ -1,5 +1,6 @@
 package com.example.javaapp.models;
 
+import com.example.javaapp.models.filters.CategoryFilter;
 import com.example.javaapp.models.filters.FilterStrategy;
 import com.example.javaapp.models.filters.PassthroughFilter;
 import com.example.javaapp.models.queries.QueryStrategy;
@@ -17,6 +18,7 @@ public class Model {
 
     private QueryStrategy queryStrategy = new SortByDate();
     private FilterStrategy filterStrategy = new PassthroughFilter();
+    private CategoryFilter categoryFilter = new CategoryFilter();
 
     private Model() {
     }
@@ -27,7 +29,9 @@ public class Model {
     }
 
     public void applyFilter() {
-        filterStrategy.applyFilter(orderedEvents, filteredEvents);
+        List<Event> localResult = new ArrayList<>();
+        filterStrategy.applyFilter(orderedEvents, localResult);
+        categoryFilter.applyFilter(localResult, filteredEvents);
     }
 
     public List<Event> getOrderedEvents() {
@@ -49,5 +53,9 @@ public class Model {
     public void setFilterStrategy(FilterStrategy filterStrategy) {
         this.filterStrategy = filterStrategy;
         applyFilter();
+    }
+
+    public CategoryFilter getCategoryFilter() {
+        return categoryFilter;
     }
 }
