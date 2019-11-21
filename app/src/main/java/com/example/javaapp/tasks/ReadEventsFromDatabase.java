@@ -33,10 +33,6 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
             orderedEvents.addAll(eventsFromDatabase);
 
             Model.getInstance().applyFilter();
-
-
-            List<String> categories = AppDatabase.getInstance(context).eventDao().getDistinctCategories();
-            System.out.println(categories);
         }
         catch(Exception e) {
             e.printStackTrace();

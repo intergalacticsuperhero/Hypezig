@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.javaapp.KreuzerScraper;
+import com.example.javaapp.RecyclerViewAdapter;
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
 import com.example.javaapp.models.ScrapingResult;
@@ -14,10 +15,12 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
 
     Context context;
     SwipeRefreshLayout layout;
+    RecyclerViewAdapter adapter;
 
-    public ReloadEventsFromInternet(Context context, SwipeRefreshLayout layout) {
+    public ReloadEventsFromInternet(Context context, SwipeRefreshLayout layout, RecyclerViewAdapter adapter) {
         this.context = context;
         this.layout = layout;
+        this.adapter = adapter;
     }
 
     @Override
@@ -43,5 +46,6 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         layout.setRefreshing(false);
+        (new ReadEventsFromDatabase(context, adapter)).execute();
     }
 }

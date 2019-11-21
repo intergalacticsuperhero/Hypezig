@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 layout.setRefreshing(true);
-                new ReloadEventsFromInternet(getApplicationContext(), layout).execute();
+                new ReloadEventsFromInternet(getApplicationContext(), layout, adapter).execute();
             }
         });
 
