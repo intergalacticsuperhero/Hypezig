@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 localCategoriesSelected[which] = isChecked;
             }
         });
-        builder.setNeutralButton("Abbrechen", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {}
         });
