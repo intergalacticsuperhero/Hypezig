@@ -1,12 +1,16 @@
 package com.example.javaapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,10 +44,15 @@ public class EventDetailsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
-                return true;
+                break;
+            case R.id.item_share:
+                shareEvent();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+        return true;
     }
 
     private void updateViews() {
@@ -100,5 +109,24 @@ public class EventDetailsActivity extends AppCompatActivity {
             bmImage.setImageBitmap(result);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail_menu, menu);
+        return true;
+    }
+
+    private void shareEvent() {
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Ich habe folgendes Event entedeckt: "
+                + event.title + " am " + dateFormat.format(event.date)
+                + " @ " + event.locationName;
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, event.title);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Teilen ..."));
+    }
+
 
 }

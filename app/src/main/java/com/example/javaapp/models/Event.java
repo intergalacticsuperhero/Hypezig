@@ -27,6 +27,7 @@ public class Event {
     public List<String> tags;
     public String imageURL;
     public String category;
+    public boolean favorite;
 
     public Event(String title, String subtitle, String details, Date date, String locationName, List<String> tags, String imageURL, String category) {
         this.title = title;
@@ -37,6 +38,7 @@ public class Event {
         this.tags = tags;
         this.imageURL = imageURL;
         this.category = category;
+        this.favorite = false;
     }
 
     @NonNull
