@@ -1,8 +1,5 @@
 package com.example.javaapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
@@ -127,6 +126,4 @@ public class EventDetailsActivity extends AppCompatActivity {
         sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Teilen ..."));
     }
-
-
 }

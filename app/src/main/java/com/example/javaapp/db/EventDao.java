@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.javaapp.models.Event;
 
@@ -27,6 +28,8 @@ public interface EventDao {
     @Query("SELECT DISTINCT category FROM event")
     List<String> getDistinctCategories();
 
+    @Update
+    void update(Event event);
 
     @Insert
     void insertAll(Event... events);

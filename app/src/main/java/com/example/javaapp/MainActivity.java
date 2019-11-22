@@ -39,17 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerViewAdapter adapter;
 
-    String[] queryLabels = new String[] { "Zeit", "Kategorie", "Ort" };
-    QueryStrategy[] queryStrategies = new QueryStrategy[] {
+    String[] queryLabels = new String[]{"Zeit", "Kategorie", "Ort"};
+    QueryStrategy[] queryStrategies = new QueryStrategy[]{
             new SortByDate(),
             new SortByCategory(),
             new SortByLocation()
     };
     int queryWhich = 0;
 
-    String[] categoryLabels = new String[] { "Theater", "Kino", "Show", "Party", "Musik",
+    String[] categoryLabels = new String[]{"Theater", "Kino", "Show", "Party", "Musik",
             "Clubbing", "Tanzen", "Kunst", "Literatur", "Vorträge & Diskussionen", "etc.",
-            "Kinder & Familie", "Umland", "Gastro-Events", "Lokale Radios", "Nature & Umwelt" };
+            "Kinder & Familie", "Umland", "Gastro-Events", "Lokale Radios", "Nature & Umwelt"};
     boolean[] categoriesSelected = new boolean[categoryLabels.length];
 
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId) {
+                switch (checkedId) {
                     case R.id.radioButtonToday:
                         Model.getInstance().setFilterStrategy(new TodayFilter());
                         break;
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.item_sort:
                 showAlertSortMenu();
                 break;
@@ -156,7 +156,8 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.setNeutralButton("Abbrechen", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {}
+            public void onClick(DialogInterface dialog, int which) {
+            }
         });
 
         AlertDialog dialog = builder.create();
@@ -177,7 +178,8 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {}
+            public void onClick(DialogInterface dialog, int which) {
+            }
         });
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -202,5 +204,5 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-}
 
+}
