@@ -16,6 +16,9 @@ public interface EventDao {
     @Query("SELECT * from event WHERE eventId = :eventId")
     Event getByEventId(int eventId);
 
+    @Query("SELECT * from event WHERE providerName = :providerName AND providerId = :providerId")
+    Event getByProviderNameAndId(String providerName, String providerId);
+
     @Query("SELECT * from event ORDER by date, locationName, category")
     List<Event> getAll();
 

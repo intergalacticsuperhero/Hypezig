@@ -25,6 +25,11 @@ import java.util.regex.Pattern;
 
 public class KreuzerScraper {
 
+    private static final String PROVIDER_NAME = "kreuzer-leipzig.de";
+    private static final SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    private static final SimpleDateFormat ID_DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
+
+
     public static ScrapingResult fetchEvents() throws Exception {
 
         List<Event> localResultEvents = new ArrayList<>();
@@ -122,8 +127,18 @@ public class KreuzerScraper {
                         m = patternTime.matcher(timeLabel);
 
                         while (m.find()) {
-                            Date eventDate = (new SimpleDateFormat("dd.MM.yyyy HH:mm")).parse(dateAsString + " " + m.group());
-                            Event newEvent = new Event(title, subtitle, details, eventDate, locationName, tags, imageURL, category);
+                            Date eventDate = INPUT_DATE_FORMAT.parse(dateAsString + " " + m.group());
+
+                            String providerId = event.attr("id") + "_" + ID_DATE_FORMAT.format(eventDate);
+
+                            Event newEvent = new Event(title, subtitle, details, eventDate, locationName, tags, imageURL, category,
+                                    PROVIDER_NAME, providerId, category);
+
+                            newEvent.locationURL = locationURL.isEmpty() ? null : "https://kreuzer-leipzig.de" + locationURL;
+                            newEvent.eventURL = "https://kreuzer-leipzig.de/termine";
+
+                            System.out.println(newEvent);
+
                             localResultEvents.add(newEvent);
                         }
                     }

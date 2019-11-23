@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,8 +63,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.title)).setText(event.title);
         ((TextView) findViewById(R.id.subtitle)).setText(event.subtitle);
         ((TextView) findViewById(R.id.date)).setText(dateFormat.format(event.date));
-        ((TextView) findViewById(R.id.location)).setText(event.locationName.toUpperCase());
+        TextView location = findViewById(R.id.location);
+        location.setText(Html.fromHtml("<a href='" + event.locationURL + "'>" + event.locationName.toUpperCase() + "</a>"));
+        location.setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.details)).setText(event.details);
+        ((TextView) findViewById(R.id.providerName)).setText("Quelle: " + event.providerName);
 
         if (event.imageURL != null) {
             new DownloadImageTask((ImageView) findViewById(R.id.imageView)).execute(event.imageURL);

@@ -32,8 +32,21 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
             AppDatabase db = AppDatabase.getInstance(context);
             Event[] newEvents = localResult.getEvents().toArray(new Event[0]);
 
-            db.eventDao().deleteAll();
-            db.eventDao().insertAll(newEvents);
+            for (Event forEvent : newEvents) {
+                Event oldEvent = db.eventDao().getByProviderNameAndId(forEvent.providerName, forEvent.providerId);
+
+                if (oldEvent == null) {
+                    db.eventDao().insertAll(forEvent);
+                }
+                else {
+                    oldEvent.title = forEvent.title;
+                    oldEvent.subtitle = forEvent.subtitle;
+                    oldEvent.details = forEvent.details;
+                    oldEvent.tags = forEvent.tags;
+                    oldEvent.imageURL = forEvent.imageURL;
+                    db.eventDao().update(oldEvent);
+                }
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
