@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerViewAdapter adapter;
 
+    private AlertDialog categoriesDialog;
+
     String[] queryLabels = new String[]{"Zeit", "Kategorie", "Ort"};
     QueryStrategy[] queryStrategies = new QueryStrategy[]{
             new SortByDate(),
@@ -50,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     String[] categoryLabels = new String[]{"Theater", "Kino", "Show", "Party", "Musik",
             "Clubbing", "Tanzen", "Kunst", "Literatur", "Vorträge & Diskussionen", "etc.",
             "Kinder & Familie", "Umland", "Gastro-Events", "Lokale Radios", "Nature & Umwelt"};
-    boolean[] categoriesSelected = new boolean[categoryLabels.length];
 
 
     @Override
@@ -165,30 +168,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAlertFilterMenu() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        if (categoriesDialog == null) {
+            categoriesDialog = buildCategoriesDialog();
+        }
 
-        final boolean[] localCategoriesSelected = categoriesSelected.clone();
+        categoriesDialog.show();
 
-        builder.setTitle("Zeige nur");
-        builder.setMultiChoiceItems(categoryLabels, localCategoriesSelected, new DialogInterface.OnMultiChoiceClickListener() {
+        categoriesDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                localCategoriesSelected[which] = isChecked;
+            public void onClick(View v) {
+                ListView listView = categoriesDialog.getListView();
+
+                boolean containsUnchecked = false;
+
+                for (int i = 0; i < categoryLabels.length; i++) {
+                    if (!listView.isItemChecked(i)) {
+                        containsUnchecked = true;
+                        break;
+                    }
+                }
+
+                if (containsUnchecked) {
+                    for (int i = 0; i < categoryLabels.length; i++) {
+                        listView.setItemChecked(i, true);
+                    }
+                }
+                else {
+                    for (int i = 0; i < categoryLabels.length; i++) {
+                        listView.setItemChecked(i, false);
+                    }
+                }
             }
         });
-        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+
+        categoriesDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                categoriesSelected = localCategoriesSelected;
+            public void onClick(View v) {
+                ListView listView = categoriesDialog.getListView();
 
                 Set<String> categoryLabelsSelected = new HashSet<>();
-                for (int i = 0; i < localCategoriesSelected.length; i++) {
-                    if (localCategoriesSelected[i]) {
+                for (int i = 0; i < categoryLabels.length; i++) {
+                    if (listView.isItemChecked(i)) {
                         categoryLabelsSelected.add(categoryLabels[i]);
                     }
                 }
@@ -197,12 +218,24 @@ public class MainActivity extends AppCompatActivity {
                 Model.getInstance().applyFilter();
                 adapter.notifyDataSetChanged();
 
-                dialog.dismiss();
+                categoriesDialog.dismiss();
             }
         });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
+    private AlertDialog buildCategoriesDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        builder.setTitle("Zeige nur");
+        builder.setMultiChoiceItems(categoryLabels, null, null);
+        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setNeutralButton("Alle", null);
+        builder.setPositiveButton("OK", null);
+
+        return builder.create();
+    }
 }
