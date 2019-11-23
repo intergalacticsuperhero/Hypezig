@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     String[] categoryLabels = new String[]{"Theater", "Kino", "Show", "Party", "Musik",
             "Clubbing", "Tanzen", "Kunst", "Literatur", "Vorträge & Diskussionen", "etc.",
-            "Kinder & Familie", "Umland", "Gastro-Events", "Lokale Radios", "Nature & Umwelt"};
+            "Kinder & Familie", "Umland", "Gastro-Events", "Lokale Radios", "Natur & Umwelt"};
 
 
     @Override
