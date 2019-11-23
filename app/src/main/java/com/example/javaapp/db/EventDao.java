@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import com.example.javaapp.models.Event;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -19,14 +20,14 @@ public interface EventDao {
     @Query("SELECT * from event WHERE providerName = :providerName AND providerId = :providerId")
     Event getByProviderNameAndId(String providerName, String providerId);
 
-    @Query("SELECT * from event ORDER by date, locationName, category")
-    List<Event> getAll();
+    @Query("SELECT * from event WHERE date >= :date ORDER by date, locationName, category")
+    List<Event> getCurrentEvents(long date);
 
-    @Query("SELECT * from event ORDER by category, date, locationName")
-    List<Event> getAllOrderedByCategory();
+    @Query("SELECT * from event WHERE date >= :date ORDER by category, date, locationName")
+    List<Event> getCurrentEventsOrderedByCategory(long date);
 
-    @Query("SELECT * from event ORDER by locationName, date, category")
-    List<Event> getAllOrderedByLocation();
+    @Query("SELECT * from event WHERE date >= :date ORDER by locationName, date, category")
+    List<Event> getCurrentEventsOrderedByLocation(long date);
 
     @Query("SELECT DISTINCT category FROM event")
     List<String> getDistinctCategories();
