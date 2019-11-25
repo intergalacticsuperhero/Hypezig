@@ -12,6 +12,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment homeFragment = new HomeFragment();
+    private Fragment favoritesFragment = new FavoritesFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new HomeFragment()).commit();
+                homeFragment).commit();
 
     }
 
@@ -34,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
-                            selectedFragment = new HomeFragment();
+                            selectedFragment = homeFragment;
                             break;
                         case R.id.nav_favorites:
-                            selectedFragment = new FavoritesFragment();
+                            selectedFragment = favoritesFragment;
                             break;
                     }
 

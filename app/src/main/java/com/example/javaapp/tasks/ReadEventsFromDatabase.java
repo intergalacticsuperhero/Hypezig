@@ -4,10 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.javaapp.RecyclerViewAdapter;
-import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
 import com.example.javaapp.models.Model;
-import com.example.javaapp.models.queries.QueryStrategy;
+import com.example.javaapp.models.queries.SelectFavorites;
 
 import java.util.List;
 
@@ -27,12 +26,16 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
         try {
             List<Event> eventsFromDatabase = Model.getInstance().getQueryStrategy().getSortedData(context);
+            List<Event> newFavorites = (new SelectFavorites()).getSortedData(context);
 
             List<Event> orderedEvents = Model.getInstance().getOrderedEvents();
             orderedEvents.clear();
             orderedEvents.addAll(eventsFromDatabase);
 
             Model.getInstance().applyFilter();
+
+            Model.getInstance().getFavorites().clear();
+            Model.getInstance().getFavorites().addAll(newFavorites);
         }
         catch(Exception e) {
             e.printStackTrace();

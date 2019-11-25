@@ -5,21 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
-        android:layout_weight="1"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/layout_listitem" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
+        android:layout_height="match_parent"
+        tools:listitem="@layout/layout_listitem" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

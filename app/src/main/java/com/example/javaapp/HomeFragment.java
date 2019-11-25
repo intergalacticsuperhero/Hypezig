@@ -65,6 +65,8 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        System.out.println("HomeFragment - onCreate");
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -122,7 +124,7 @@ public class HomeFragment extends Fragment {
     private void initRecyclerView(@NonNull View view) {
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter(getActivity());
+        adapter = new RecyclerViewAdapter(getActivity(), Model.getInstance().getFilteredEvents());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

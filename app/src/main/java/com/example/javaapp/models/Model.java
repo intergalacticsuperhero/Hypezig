@@ -15,6 +15,7 @@ public class Model {
 
     private ArrayList<Event> orderedEvents = new ArrayList<>();
     private ArrayList<Event> filteredEvents = new ArrayList<>();
+    private ArrayList<Event> favorites = new ArrayList<>();
 
     private QueryStrategy queryStrategy = new SortByDate();
     private FilterStrategy filterStrategy = new PassthroughFilter();
@@ -45,6 +46,8 @@ public class Model {
     public QueryStrategy getQueryStrategy() {
         return queryStrategy;
     }
+
+    public List<Event> getFavorites() { return favorites; }
 
     public void setQueryStrategy(QueryStrategy queryStrategy) {
         this.queryStrategy = queryStrategy;

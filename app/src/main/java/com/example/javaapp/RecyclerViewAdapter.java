@@ -12,14 +12,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
-import com.example.javaapp.models.Model;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -29,9 +28,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     SimpleDateFormat dayAndMonth = new SimpleDateFormat("dd.MM.");
     SimpleDateFormat hours = new SimpleDateFormat("HH:mm");
 
+    List<Event> eventsToDisplay = null;
 
-    public RecyclerViewAdapter(Context context) {
+
+    public RecyclerViewAdapter(Context context, List<Event> eventsToDisplay) {
         this.context = context;
+        this.eventsToDisplay = eventsToDisplay;
     }
 
     @NonNull
@@ -44,7 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final Event e = Model.getInstance().getFilteredEvents().get(position);
+        final Event e = eventsToDisplay.get(position);
 
         holder.day.setText(dayOfWeek.format(e.date).toUpperCase());
         holder.title.setText(e.title);
@@ -85,15 +87,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-
-
     private int getFavoriteImageResource(boolean isSelected) {
         return isSelected ? android.R.drawable.btn_star_big_on : android.R.drawable.btn_star_big_off;
     }
 
     @Override
     public int getItemCount() {
-        return Model.getInstance().getFilteredEvents().size();
+        return eventsToDisplay.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
