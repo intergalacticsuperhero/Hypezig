@@ -43,7 +43,7 @@ public class KreuzerScraper {
         Date today = Calendar.getInstance().getTime();
 
         Calendar calendarNextMonth = Calendar.getInstance();
-        calendarNextMonth.add(Calendar.MONTH, 1);
+        calendarNextMonth.add(Calendar.WEEK_OF_MONTH, 2);
         Date nextMonth = calendarNextMonth.getTime();
 
         String thisYear = (new SimpleDateFormat("yyyy")).format(today);
@@ -61,7 +61,7 @@ public class KreuzerScraper {
 
             Connection connection = Jsoup.connect(url);
             connection.maxBodySize(0);
-            Document doc = connection.timeout(60 * 1000).get();
+            Document doc = connection.timeout(2 * 60 * 1000).get();
 
             Elements events = doc.select("article.termin");
             System.out.println(events.size() + " events found.");
