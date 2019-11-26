@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,11 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
+import com.example.javaapp.models.Model;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
 
     private Context context;
 
@@ -28,7 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     SimpleDateFormat dayAndMonth = new SimpleDateFormat("dd.MM.");
     SimpleDateFormat hours = new SimpleDateFormat("HH:mm");
 
-    List<Event> eventsToDisplay = null;
+    List<Event> eventsToDisplay;
 
 
     public RecyclerViewAdapter(Context context, List<Event> eventsToDisplay) {
@@ -96,6 +100,48 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return eventsToDisplay.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Event> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(Model.getInstance().getFilteredEvents());
+            }
+            else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Event forEvent : Model.getInstance().getFilteredEvents()) {
+                    if (forEvent.title.toLowerCase().contains(filterPattern)
+                            || forEvent.locationName.toLowerCase().contains(filterPattern)
+                            || forEvent.category.toLowerCase().contains(filterPattern)
+                            || forEvent.subtitle.toLowerCase().contains(filterPattern)
+                            || forEvent.details.toLowerCase().contains(filterPattern)) {
+                        filteredList.add(forEvent);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            eventsToDisplay.clear();
+            eventsToDisplay.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView day, date, time, title, category, location;
@@ -114,4 +160,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             favorite = itemView.findViewById(R.id.favorite_button);
         }
     }
+
+    public void updateEventsToDisplay(List<Event> newList) {
+        this.eventsToDisplay = new ArrayList<>(newList);
+        notifyDataSetChanged();
+    }
+
 }

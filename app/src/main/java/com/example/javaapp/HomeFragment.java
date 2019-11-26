@@ -10,12 +10,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -112,7 +114,7 @@ public class HomeFragment extends Fragment {
                         System.out.println("this should never happen");
                 }
 
-                adapter.notifyDataSetChanged();
+                adapter.updateEventsToDisplay(Model.getInstance().getFilteredEvents());
             }
         });
 
@@ -149,6 +151,23 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.item_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -242,7 +261,7 @@ public class HomeFragment extends Fragment {
 
                 Model.getInstance().getCategoryFilter().setCategories(categoryLabelsSelected);
                 Model.getInstance().applyFilter();
-                adapter.notifyDataSetChanged();
+                adapter.updateEventsToDisplay(Model.getInstance().getFilteredEvents());
 
                 categoriesDialog.dismiss();
             }

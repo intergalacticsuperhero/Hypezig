@@ -2,15 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/item_sort"
-        android:icon="@drawable/icon_sort_white"
-        android:title="Sortieren"
-        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/item_search"
+        android:icon="@drawable/icon_search"
+        android:title="Suchen"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item android:id="@+id/item_filter"
         android:icon="@drawable/icon_filter"
-        android:title="Sortieren"
+        android:title="Kategorien wählen"
         app:showAsAction="ifRoom"/>
 
+    <item android:id="@+id/item_sort"
+        android:icon="@drawable/icon_sort_white"
+        android:title="Sortierung ändern"
+        app:showAsAction="ifRoom"/>
 
 </menu>

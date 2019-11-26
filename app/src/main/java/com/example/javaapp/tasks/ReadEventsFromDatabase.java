@@ -46,6 +46,6 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        adapter.notifyDataSetChanged();
+        adapter.updateEventsToDisplay(Model.getInstance().getFilteredEvents());
     }
 }
