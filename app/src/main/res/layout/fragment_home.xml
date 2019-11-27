@@ -30,7 +30,7 @@
                 android:id="@+id/radioButtonWeekend"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Sa/So" />
+                android:text="Fr-So" />
 
             <RadioButton
                 android:id="@+id/radioButtonNextWeek"
@@ -42,7 +42,7 @@
                 android:id="@+id/radioButtonEverything"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Alles" />
+                android:text="danach" />
         </RadioGroup>
 
 

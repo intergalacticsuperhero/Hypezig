@@ -8,7 +8,7 @@ import java.util.List;
 
 public class WeekendFilter implements FilterStrategy {
 
-    private final List<Integer> WEEKEND_DAYS = Arrays.asList(Calendar.SATURDAY, Calendar.SUNDAY);
+    private final List<Integer> WEEKEND_DAYS = Arrays.asList(Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY);
 
     @Override
     public void applyFilter(List<Event> input, List<Event> output) {
@@ -22,9 +22,7 @@ public class WeekendFilter implements FilterStrategy {
         for (Event e : input) {
             c.setTime(e.date);
 
-            if (c.after(nextWeek)) continue;
-
-            if (WEEKEND_DAYS.contains(c.get(Calendar.DAY_OF_WEEK))) {
+            if (c.before(nextWeek) && WEEKEND_DAYS.contains(c.get(Calendar.DAY_OF_WEEK))) {
                 output.add(e);
             }
         }

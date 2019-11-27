@@ -2,7 +2,7 @@ package com.example.javaapp.models;
 
 import com.example.javaapp.models.filters.CategoryFilter;
 import com.example.javaapp.models.filters.FilterStrategy;
-import com.example.javaapp.models.filters.PassthroughFilter;
+import com.example.javaapp.models.filters.NextWeekFilter;
 import com.example.javaapp.models.queries.QueryStrategy;
 import com.example.javaapp.models.queries.SortByDate;
 
@@ -18,7 +18,7 @@ public class Model {
     private ArrayList<Event> favorites = new ArrayList<>();
 
     private QueryStrategy queryStrategy = new SortByDate();
-    private FilterStrategy filterStrategy = new PassthroughFilter();
+    private FilterStrategy filterStrategy = new NextWeekFilter();
     private CategoryFilter categoryFilter = new CategoryFilter();
 
     private Model() {

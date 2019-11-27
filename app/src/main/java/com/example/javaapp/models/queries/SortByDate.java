@@ -12,6 +12,6 @@ public class SortByDate implements QueryStrategy {
 
     @Override
     public List<Event> getSortedData(Context context) {
-        return AppDatabase.getInstance(context).eventDao().getCurrentEvents((new Date()).getTime());
+        return AppDatabase.getInstance(context).eventDao().getCurrentEvents((new Date()).getTime() - 2 * 60 * 60 * 1000);
     }
 }

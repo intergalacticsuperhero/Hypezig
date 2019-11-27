@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.javaapp.models.Model;
-import com.example.javaapp.models.filters.PassthroughFilter;
+import com.example.javaapp.models.filters.NextWeekFilter;
 import com.example.javaapp.models.filters.TodayFilter;
 import com.example.javaapp.models.filters.WeekFilter;
 import com.example.javaapp.models.filters.WeekendFilter;
@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment {
                         Model.getInstance().setFilterStrategy(new WeekFilter());
                         break;
                     case R.id.radioButtonEverything:
-                        Model.getInstance().setFilterStrategy(new PassthroughFilter());
+                        Model.getInstance().setFilterStrategy(new NextWeekFilter());
                         break;
                     default:
                         System.out.println("this should never happen");

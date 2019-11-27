@@ -4,24 +4,20 @@ import com.example.javaapp.models.Event;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class WeekFilter implements FilterStrategy {
 
-    private final List<Integer> WEEKEND_DAYS = Arrays.asList(Calendar.SATURDAY, Calendar.SUNDAY);
-
     @Override
     public void applyFilter(List<Event> input, List<Event> output) {
-        Calendar nextWeek = Calendar.getInstance();
-        nextWeek.add(Calendar.DAY_OF_MONTH, 7);
 
-        Calendar c = Calendar.getInstance();
+        long nextWeekDate = (new Date()).getTime() + 7 * 24 * 60 * 60 * 1000;
 
         output.clear();
 
         for (Event e : input) {
-            c.setTime(e.date);
-            if (!c.after(nextWeek)) output.add(e);
+            if (e.date.getTime() < nextWeekDate) output.add(e);
         }
     }
 }
