@@ -29,6 +29,9 @@ public interface EventDao {
     @Query("SELECT * from event WHERE date >= :date ORDER by locationName, date, category")
     List<Event> getCurrentEventsOrderedByLocation(long date);
 
+    @Query("SELECT * from event WHERE date >= :date ORDER by title, date, locationName")
+    List<Event> getCurrentEventsOrderedByTitle(long date);
+
     @Query("SELECT * FROM event WHERE favorite = 1 AND date >= :date ORDER by date")
     List<Event> getFavorites(long date);
 

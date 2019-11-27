@@ -32,6 +32,7 @@ import com.example.javaapp.models.queries.QueryStrategy;
 import com.example.javaapp.models.queries.SortByCategory;
 import com.example.javaapp.models.queries.SortByDate;
 import com.example.javaapp.models.queries.SortByLocation;
+import com.example.javaapp.models.queries.SortByName;
 import com.example.javaapp.tasks.ReadEventsFromDatabase;
 import com.example.javaapp.tasks.ReloadEventsFromInternet;
 
@@ -52,9 +53,10 @@ public class HomeFragment extends Fragment {
 
     private SearchView searchView;
 
-    String[] queryLabels = new String[]{"Zeit", "Kategorie", "Ort"};
+    String[] queryLabels = new String[]{"Zeit", "Name", "Kategorie", "Ort"};
     QueryStrategy[] queryStrategies = new QueryStrategy[]{
             new SortByDate(),
+            new SortByName(),
             new SortByCategory(),
             new SortByLocation()
     };
