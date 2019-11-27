@@ -50,6 +50,8 @@ public class HomeFragment extends Fragment {
 
     private AlertDialog categoriesDialog;
 
+    private SearchView searchView;
+
     String[] queryLabels = new String[]{"Zeit", "Kategorie", "Ort"};
     QueryStrategy[] queryStrategies = new QueryStrategy[]{
             new SortByDate(),
@@ -155,7 +157,7 @@ public class HomeFragment extends Fragment {
         inflater.inflate(R.menu.main_menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.item_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -245,6 +247,8 @@ public class HomeFragment extends Fragment {
                         listView.setItemChecked(i, false);
                     }
                 }
+
+                applySearchFilter();
             }
         });
 
@@ -266,8 +270,14 @@ public class HomeFragment extends Fragment {
                 adapter.updateEventsToDisplay(Model.getInstance().getFilteredEvents());
 
                 categoriesDialog.dismiss();
+
+                applySearchFilter();
             }
         });
+    }
+
+    private void applySearchFilter() {
+        adapter.getFilter().filter(searchView.getQuery());
     }
 
 }

@@ -33,11 +33,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     SimpleDateFormat hours = new SimpleDateFormat("HH:mm");
 
     List<Event> eventsToDisplay;
+    List<Event> dataSource;
 
 
-    public RecyclerViewAdapter(Context context, List<Event> eventsToDisplay) {
+    public RecyclerViewAdapter(Context context, List<Event> dataSource) {
         this.context = context;
-        this.eventsToDisplay = eventsToDisplay;
+        this.dataSource = dataSource;
+        this.eventsToDisplay = new ArrayList<>(dataSource);
     }
 
     @NonNull
@@ -112,12 +114,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             List<Event> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(Model.getInstance().getFilteredEvents());
+                filteredList.addAll(dataSource);
             }
             else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (Event forEvent : Model.getInstance().getFilteredEvents()) {
+                for (Event forEvent : dataSource) {
                     if (forEvent.title.toLowerCase().contains(filterPattern)
                             || forEvent.locationName.toLowerCase().contains(filterPattern)
                             || forEvent.category.toLowerCase().contains(filterPattern)
@@ -162,11 +164,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public void updateEventsToDisplay(List<Event> newList) {
-        List<Event> newResults = new ArrayList<>(newList);
+        List<Event> newResults;
+
+        if (newList != null) {
+            newResults = new ArrayList<>(newList);
+        }
+        else {
+            newResults = dataSource;
+        }
+
         this.eventsToDisplay.clear();
         this.eventsToDisplay.addAll(newResults);
 
         notifyDataSetChanged();
     }
-
 }
