@@ -13,13 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.javaapp.models.Model;
+import com.example.javaapp.tasks.ReadEventsFromDatabase;
 
 
 public class FavoritesFragment extends Fragment {
 
+    private RecyclerViewAdapter adapter;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("HomeFragment - onCreateView");
+        System.out.println("FavoritesFragment - onCreateView");
 
         return inflater.inflate(R.layout.fragment_favorites, container, false);
     }
@@ -30,12 +33,13 @@ public class FavoritesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);
 
-        System.out.println("HomeFragment - onCreateView");
+        (new ReadEventsFromDatabase(getActivity().getApplicationContext(), adapter)).execute();
     }
 
     private void initRecyclerView(@NonNull View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setAdapter(new RecyclerViewAdapter(getActivity(), Model.getInstance().getFavorites()));
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewFavorites);
+        adapter = new RecyclerViewAdapter(getActivity(), Model.getInstance().getFavorites());
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

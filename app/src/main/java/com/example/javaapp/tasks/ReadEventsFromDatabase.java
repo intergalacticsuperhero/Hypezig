@@ -25,6 +25,9 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
 
         try {
+
+            System.out.println("ReadEventsFromDatabase.doInBackground called");
+
             List<Event> eventsFromDatabase = Model.getInstance().getQueryStrategy().getSortedData(context);
             List<Event> newFavorites = (new SelectFavorites()).getSortedData(context);
 
@@ -46,6 +49,6 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        adapter.updateEventsToDisplay(Model.getInstance().getFilteredEvents());
+        adapter.notifyDataSetChanged();
     }
 }

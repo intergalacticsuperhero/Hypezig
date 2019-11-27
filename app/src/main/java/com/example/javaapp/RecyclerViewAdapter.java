@@ -162,7 +162,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public void updateEventsToDisplay(List<Event> newList) {
-        this.eventsToDisplay = new ArrayList<>(newList);
+        List<Event> newResults = new ArrayList<>(newList);
+        this.eventsToDisplay.clear();
+        this.eventsToDisplay.addAll(newResults);
+
         notifyDataSetChanged();
     }
 

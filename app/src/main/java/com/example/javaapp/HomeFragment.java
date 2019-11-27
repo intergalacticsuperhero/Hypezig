@@ -80,6 +80,8 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        System.out.println("HomeFragment - onViewCreated");
+
         Arrays.sort(categoryLabels);
 
         final SwipeRefreshLayout layout = view.findViewById(R.id.refreshLayout);
