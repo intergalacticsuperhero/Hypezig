@@ -43,7 +43,7 @@ public class KreuzerScraper {
         Date today = Calendar.getInstance().getTime();
 
         Calendar calendarNextMonth = Calendar.getInstance();
-        calendarNextMonth.add(Calendar.WEEK_OF_MONTH, 2);
+        calendarNextMonth.add(Calendar.MONTH, 1);
         Date nextMonth = calendarNextMonth.getTime();
 
         String thisYear = (new SimpleDateFormat("yyyy")).format(today);

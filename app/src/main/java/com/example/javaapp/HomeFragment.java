@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -127,6 +128,8 @@ public class HomeFragment extends Fragment {
         initRecyclerView(view);
         ((RadioButton) view.findViewById(R.id.radioButtonToday)).toggle();
         (new ReadEventsFromDatabase(getActivity().getApplicationContext(), adapter)).execute();
+
+        Toast.makeText(getContext(), "Nach unten wischen um neue Events zu laden", Toast.LENGTH_LONG).show();
     }
 
     private void initRecyclerView(@NonNull View view) {
