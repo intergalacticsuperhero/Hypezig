@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.javaapp.R;
-import com.example.javaapp.ui.FavoritesFragment;
-import com.example.javaapp.ui.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static com.example.javaapp.BaseApplication.LOG_UI;

@@ -28,7 +28,8 @@ import java.util.List;
 import static com.example.javaapp.BaseApplication.LOG_APP;
 import static com.example.javaapp.BaseApplication.LOG_UI;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
+        implements Filterable {
 
     private Context context;
 

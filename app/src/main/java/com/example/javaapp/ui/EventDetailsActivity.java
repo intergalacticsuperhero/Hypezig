@@ -23,7 +23,6 @@ import com.example.javaapp.models.Event;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
-import static com.example.javaapp.BaseApplication.LOG_APP;
 import static com.example.javaapp.BaseApplication.LOG_DATA;
 import static com.example.javaapp.BaseApplication.LOG_NET;
 import static com.example.javaapp.BaseApplication.LOG_UI;

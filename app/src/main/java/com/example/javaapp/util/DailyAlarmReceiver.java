@@ -31,8 +31,8 @@ public class DailyAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(LOG_APP, getClass().getName() + ".onReceive() called with: context = [" + context + "], intent = ["
-                + intent + "]");
+        Log.d(LOG_APP, getClass().getName() + ".onReceive() called with: context = ["
+                + context + "], intent = [" + intent + "]");
         Log.i(LOG_APP, "onReceive: was called at " + new Date());
 
         List<Event> favorites = Model.getInstance().getFavorites();

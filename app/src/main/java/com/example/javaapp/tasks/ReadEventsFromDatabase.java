@@ -28,10 +28,12 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        Log.d(LOG_DATA, getClass().getName() + ".doInBackground() called with: voids = [" + voids + "]");
+        Log.d(LOG_DATA, getClass().getName() + ".doInBackground() called with: voids = ["
+                + voids + "]");
 
         // Read events from database
-        List<Event> eventsFromDatabase = Model.getInstance().getQueryStrategy().getSortedData(context);
+        List<Event> eventsFromDatabase = Model.getInstance()
+                .getQueryStrategy().getSortedData(context);
         List<Event> newFavorites = (new SelectFavorites()).getSortedData(context);
 
         Log.i(LOG_DATA, getClass().getName() + " " + eventsFromDatabase.size()
@@ -55,7 +57,8 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        Log.d(LOG_DATA, getClass().getName() + ".onPostExecute() called with: aVoid = [" + aVoid + "]");
+        Log.d(LOG_DATA, getClass().getName() + ".onPostExecute() called with: aVoid = ["
+                + aVoid + "]");
 
         adapter.updateEventsToDisplay(null);
     }
