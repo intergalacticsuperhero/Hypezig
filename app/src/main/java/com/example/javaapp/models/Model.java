@@ -5,8 +5,8 @@ import android.util.Log;
 import com.example.javaapp.models.filters.CategoryFilter;
 import com.example.javaapp.models.filters.FilterStrategy;
 import com.example.javaapp.models.filters.NextWeekFilter;
-import com.example.javaapp.models.queries.QueryStrategy;
-import com.example.javaapp.models.queries.SortByDate;
+import com.example.javaapp.db.queries.QueryStrategy;
+import com.example.javaapp.db.queries.SortByDate;
 
 import java.util.ArrayList;
 import java.util.List;

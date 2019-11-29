@@ -1,4 +1,4 @@
-package com.example.javaapp.models.queries;
+package com.example.javaapp.db.queries;
 
 import android.content.Context;
 

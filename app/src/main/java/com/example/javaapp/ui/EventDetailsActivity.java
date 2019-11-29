@@ -1,4 +1,4 @@
-package com.example.javaapp;
+package com.example.javaapp.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.javaapp.R;
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
 

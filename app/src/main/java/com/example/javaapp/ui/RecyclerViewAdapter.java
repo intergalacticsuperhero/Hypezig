@@ -1,4 +1,4 @@
-package com.example.javaapp;
+package com.example.javaapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.javaapp.R;
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
 

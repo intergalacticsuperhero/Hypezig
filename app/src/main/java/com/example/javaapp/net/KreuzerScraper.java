@@ -1,9 +1,8 @@
-package com.example.javaapp;
+package com.example.javaapp.net;
 
 import android.util.Log;
 
 import com.example.javaapp.models.Event;
-import com.example.javaapp.models.Location;
 import com.example.javaapp.models.ScrapingResult;
 
 import org.jsoup.Connection;
@@ -38,9 +37,6 @@ public class KreuzerScraper {
         Log.d(LOG_NET, KreuzerScraper.class.getName() + ".fetchEvents() called");
 
         List<Event> localResultEvents = new ArrayList<>();
-        List<Location> localResultLocations;
-
-        Map<String, Location> locations = new HashMap<>();
 
         Pattern patternDate = Pattern.compile("(\\d{2})\\.(\\d{2})\\.");
         Pattern patternTime = Pattern.compile("(\\d{2})\\:(\\d{2})");
@@ -121,9 +117,6 @@ public class KreuzerScraper {
                     String locationName = locationElement.text();
                     String locationURL = locationElement.attr("href");
 
-                    Location location = new Location(locationName, locationURL);
-                    locations.put(locationName, location);
-
                     Element timesElement = locationTimes.get(i + 1);
 
                     for (Element time : timesElement.select("li")) {
@@ -161,14 +154,12 @@ public class KreuzerScraper {
             }
 
             Log.i(LOG_NET, "fetchEvents: Import complete");
-
-            localResultLocations = new ArrayList<>(locations.values());
         }
         catch(Exception e) {
             Log.e(LOG_NET, "fetchEvents: ", e);
             throw(e);
         }
 
-        return new ScrapingResult(localResultEvents, localResultLocations);
+        return new ScrapingResult(localResultEvents);
     }
 }

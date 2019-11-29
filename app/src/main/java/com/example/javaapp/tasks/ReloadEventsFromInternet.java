@@ -6,8 +6,8 @@ import android.util.Log;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.javaapp.KreuzerScraper;
-import com.example.javaapp.RecyclerViewAdapter;
+import com.example.javaapp.net.KreuzerScraper;
+import com.example.javaapp.ui.RecyclerViewAdapter;
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
 import com.example.javaapp.models.ScrapingResult;

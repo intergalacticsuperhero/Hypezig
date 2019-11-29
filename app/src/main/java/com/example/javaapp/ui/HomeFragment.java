@@ -1,4 +1,4 @@
-package com.example.javaapp;
+package com.example.javaapp.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -24,16 +24,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.javaapp.R;
 import com.example.javaapp.models.Model;
 import com.example.javaapp.models.filters.NextWeekFilter;
 import com.example.javaapp.models.filters.TodayFilter;
 import com.example.javaapp.models.filters.WeekFilter;
 import com.example.javaapp.models.filters.WeekendFilter;
-import com.example.javaapp.models.queries.QueryStrategy;
-import com.example.javaapp.models.queries.SortByCategory;
-import com.example.javaapp.models.queries.SortByDate;
-import com.example.javaapp.models.queries.SortByLocation;
-import com.example.javaapp.models.queries.SortByName;
+import com.example.javaapp.db.queries.QueryStrategy;
+import com.example.javaapp.db.queries.SortByCategory;
+import com.example.javaapp.db.queries.SortByDate;
+import com.example.javaapp.db.queries.SortByLocation;
+import com.example.javaapp.db.queries.SortByName;
 import com.example.javaapp.tasks.ReadEventsFromDatabase;
 import com.example.javaapp.tasks.ReloadEventsFromInternet;
 

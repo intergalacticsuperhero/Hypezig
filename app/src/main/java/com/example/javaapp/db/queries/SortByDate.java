@@ -1,4 +1,4 @@
-package com.example.javaapp.models.queries;
+package com.example.javaapp.db.queries;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,11 +11,11 @@ import java.util.List;
 
 import static com.example.javaapp.BaseApplication.LOG_DATA;
 
-public class SortByCategory implements QueryStrategy {
+public class SortByDate implements QueryStrategy {
 
     @Override
     public List<Event> getSortedData(Context context) {
         Log.d(LOG_DATA, getClass().getName() + ".getSortedData() called with: context = [" + context + "]");
-        return AppDatabase.getInstance(context).eventDao().getCurrentEventsOrderedByCategory((new Date()).getTime() - 2 * 60 * 60 * 1000);
+        return AppDatabase.getInstance(context).eventDao().getCurrentEvents((new Date()).getTime() - 2 * 60 * 60 * 1000);
     }
 }

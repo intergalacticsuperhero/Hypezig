@@ -1,4 +1,4 @@
-package com.example.javaapp;
+package com.example.javaapp.util;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -12,8 +12,10 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.javaapp.R;
 import com.example.javaapp.models.Event;
 import com.example.javaapp.models.Model;
+import com.example.javaapp.ui.EventDetailsActivity;
 
 import java.util.Date;
 import java.util.List;

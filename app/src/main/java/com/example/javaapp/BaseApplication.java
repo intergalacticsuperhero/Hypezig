@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.example.javaapp.util.DailyAlarmReceiver;
+
 import java.util.Date;
 
 public class BaseApplication extends Application {

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.javaapp.RecyclerViewAdapter;
+import com.example.javaapp.ui.RecyclerViewAdapter;
 import com.example.javaapp.models.Event;
 import com.example.javaapp.models.Model;
-import com.example.javaapp.models.queries.SelectFavorites;
+import com.example.javaapp.db.queries.SelectFavorites;
 
 import java.util.List;
 
