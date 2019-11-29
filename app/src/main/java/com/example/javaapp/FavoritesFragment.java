@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.javaapp.models.Model;
 import com.example.javaapp.tasks.ReadEventsFromDatabase;
 
+import static com.example.javaapp.BaseApplication.LOG_UI;
+
 
 public class FavoritesFragment extends Fragment {
 
@@ -22,7 +24,9 @@ public class FavoritesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("FavoritesFragment - onCreateView");
+        Log.d(LOG_UI, getClass().getName() + ".onCreateView() called with: inflater = ["
+                + inflater + "], container = [" + container + "], savedInstanceState = ["
+                + savedInstanceState + "]");
 
         return inflater.inflate(R.layout.fragment_favorites, container, false);
     }
@@ -30,6 +34,9 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.d(LOG_UI, getClass().getName() + ".onViewCreated() called with: view = [" + view
+                + "], savedInstanceState = [" + savedInstanceState + "]");
+
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);
 
@@ -37,6 +44,8 @@ public class FavoritesFragment extends Fragment {
     }
 
     private void initRecyclerView(@NonNull View view) {
+        Log.d(LOG_UI, getClass().getName() + ".initRecyclerView() called with: view = ["
+                + view + "]");
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewFavorites);
         adapter = new RecyclerViewAdapter(getActivity(), Model.getInstance().getFavorites());
         recyclerView.setAdapter(adapter);

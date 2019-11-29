@@ -1,10 +1,13 @@
 package com.example.javaapp.models.filters;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import com.example.javaapp.models.Event;
 
 import java.util.List;
+
+import static com.example.javaapp.BaseApplication.LOG_APP;
 
 
 public class TodayFilter implements FilterStrategy {
@@ -12,6 +15,8 @@ public class TodayFilter implements FilterStrategy {
 
     @Override
     public void applyFilter(List<Event> input, List<Event> output) {
+        Log.d(LOG_APP, getClass().getName() + ".applyFilter() called with: input = [" + input + "], output = [" + output + "]");
+
         output.clear();
 
         for (Event e : input) {

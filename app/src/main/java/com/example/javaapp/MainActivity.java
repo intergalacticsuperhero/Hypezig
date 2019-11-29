@@ -1,6 +1,7 @@
 package com.example.javaapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import static com.example.javaapp.BaseApplication.LOG_UI;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(LOG_UI, getClass().getName() + ".onCreate() called with: savedInstanceState = ["
+                + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Log.i(LOG_UI, "Option '" + menuItem.toString() + "' selected");
+
                     Fragment selectedFragment = null;
 
                     switch (menuItem.getItemId()) {
@@ -52,10 +59,8 @@ public class MainActivity extends AppCompatActivity {
             };
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    public void onAttachFragment(Fragment fragment){
+        Log.i(LOG_UI, "Fragment " + fragment.getClass().getSimpleName() + " attached to "
+                + this.getClass().getSimpleName()  );
     }
-
-
-
 }

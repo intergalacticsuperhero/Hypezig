@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".DailyAlarmReveiver" >
+        <receiver android:name=".DailyAlarmReceiver" >
         </receiver>
     </application>
 

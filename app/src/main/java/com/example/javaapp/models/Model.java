@@ -1,5 +1,7 @@
 package com.example.javaapp.models;
 
+import android.util.Log;
+
 import com.example.javaapp.models.filters.CategoryFilter;
 import com.example.javaapp.models.filters.FilterStrategy;
 import com.example.javaapp.models.filters.NextWeekFilter;
@@ -8,6 +10,8 @@ import com.example.javaapp.models.queries.SortByDate;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.javaapp.BaseApplication.LOG_APP;
 
 public class Model {
 
@@ -22,14 +26,19 @@ public class Model {
     private CategoryFilter categoryFilter = new CategoryFilter();
 
     private Model() {
+        Log.d(LOG_APP, getClass().getName() + " constructed");
     }
 
     public static Model getInstance() {
+        Log.d(LOG_APP, Model.class.getName() + ".getInstance() called");
+
         if (instance == null) instance = new Model();
         return instance;
     }
 
     public void applyFilter() {
+        Log.d(LOG_APP, getClass().getName() + ".applyFilter() called");
+
         List<Event> localResult = new ArrayList<>();
         filterStrategy.applyFilter(orderedEvents, localResult);
         categoryFilter.applyFilter(localResult, filteredEvents);
@@ -49,16 +58,20 @@ public class Model {
 
     public List<Event> getFavorites() { return favorites; }
 
+    public CategoryFilter getCategoryFilter() {
+        return categoryFilter;
+    }
+
     public void setQueryStrategy(QueryStrategy queryStrategy) {
+        Log.d(LOG_APP, getClass().getName() + ".setQueryStrategy() called");
+
         this.queryStrategy = queryStrategy;
     }
 
     public void setFilterStrategy(FilterStrategy filterStrategy) {
+        Log.d(LOG_APP, getClass().getName() + ".setFilterStrategy() called");
+
         this.filterStrategy = filterStrategy;
         applyFilter();
-    }
-
-    public CategoryFilter getCategoryFilter() {
-        return categoryFilter;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.javaapp;
 
-import android.text.format.DateUtils;
+import android.util.Log;
 
 import com.example.javaapp.models.Event;
 import com.example.javaapp.models.Location;
@@ -23,14 +23,19 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.example.javaapp.BaseApplication.LOG_NET;
+
 public class KreuzerScraper {
 
     private static final String PROVIDER_NAME = "kreuzer-leipzig.de";
-    private static final SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-    private static final SimpleDateFormat ID_DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
+    private static final SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat(
+            "dd.MM.yyyy HH:mm");
+    private static final SimpleDateFormat ID_DATE_FORMAT = new SimpleDateFormat(
+            "yyyyMMddHHmm");
 
 
     public static ScrapingResult fetchEvents() throws Exception {
+        Log.d(LOG_NET, KreuzerScraper.class.getName() + ".fetchEvents() called");
 
         List<Event> localResultEvents = new ArrayList<>();
         List<Location> localResultLocations;
@@ -57,18 +62,20 @@ public class KreuzerScraper {
                     + "&datumBis="
                     + searchDateFormat.format(nextMonth);
 
-            System.out.println(url);
+            Log.i(LOG_NET, "fetchEvents: URL to be read = " + url);
 
             Connection connection = Jsoup.connect(url);
             connection.maxBodySize(0);
             Document doc = connection.timeout(2 * 60 * 1000).get();
 
             Elements events = doc.select("article.termin");
-            System.out.println(events.size() + " events found.");
+            Log.i(LOG_NET, "fetchEvents: " + events.size() + " events found.");
+
             int eventCounter = 1;
 
             for (Element event : events) {
-                System.out.println("Processing event " + eventCounter + "...");
+                Log.d(LOG_NET, "fetchEvents: Processing event " + eventCounter + "...");
+
                 eventCounter++;
                 Elements titleElement = event.select("h2");
                 Elements tagElements = titleElement.select("strong");
@@ -94,8 +101,12 @@ public class KreuzerScraper {
                 Element whenAndWhere = event.select(".whenAndWhere").first();
 
                 if (whenAndWhere == null) {
-                    System.out.println(doc.text());
-                    throw (new Exception("No .whenAndWhere found"));
+                    Exception e = new Exception("No .whenAndWhere found");
+
+                    Log.e(LOG_NET, "fetchEvents: No .whenAndWhere found!", e);
+                    Log.i(LOG_NET, "fetchEvents: current event: " + event);
+
+                    throw (e);
                 }
                 Elements locationTimes = whenAndWhere.children();
 
@@ -127,17 +138,21 @@ public class KreuzerScraper {
                         m = patternTime.matcher(timeLabel);
 
                         while (m.find()) {
-                            Date eventDate = INPUT_DATE_FORMAT.parse(dateAsString + " " + m.group());
+                            Date eventDate = INPUT_DATE_FORMAT.parse(dateAsString + " "
+                                    + m.group());
 
-                            String providerId = event.attr("id") + "_" + ID_DATE_FORMAT.format(eventDate);
+                            String providerId = event.attr("id") + "_"
+                                    + ID_DATE_FORMAT.format(eventDate);
 
-                            Event newEvent = new Event(title, subtitle, details, eventDate, locationName, tags, imageURL, category,
-                                    PROVIDER_NAME, providerId, category);
+                            Event newEvent = new Event(title, subtitle, details, eventDate,
+                                    locationName, tags, imageURL, category, PROVIDER_NAME,
+                                    providerId, category);
 
-                            newEvent.locationURL = locationURL.isEmpty() ? null : "https://kreuzer-leipzig.de" + locationURL;
+                            newEvent.locationURL = locationURL.isEmpty() ? null :
+                                    "https://kreuzer-leipzig.de" + locationURL;
                             newEvent.eventURL = "https://kreuzer-leipzig.de/termine";
 
-                            System.out.println(newEvent);
+                            Log.d(LOG_NET, "fetchEvents: new event created: " + newEvent);
 
                             localResultEvents.add(newEvent);
                         }
@@ -145,12 +160,12 @@ public class KreuzerScraper {
                 }
             }
 
-            System.out.println("Import complete.");
+            Log.i(LOG_NET, "fetchEvents: Import complete");
 
             localResultLocations = new ArrayList<>(locations.values());
         }
         catch(Exception e) {
-            e.printStackTrace();
+            Log.e(LOG_NET, "fetchEvents: ", e);
             throw(e);
         }
 

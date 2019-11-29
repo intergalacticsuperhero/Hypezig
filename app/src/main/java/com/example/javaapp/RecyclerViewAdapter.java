@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.javaapp.db.AppDatabase;
 import com.example.javaapp.models.Event;
-import com.example.javaapp.models.Model;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.javaapp.BaseApplication.LOG_APP;
+import static com.example.javaapp.BaseApplication.LOG_UI;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
 
@@ -37,6 +40,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     public RecyclerViewAdapter(Context context, List<Event> dataSource) {
+        Log.d(LOG_APP, getClass().getName() + " constructed");
+
         this.context = context;
         this.dataSource = dataSource;
         this.eventsToDisplay = new ArrayList<>(dataSource);
@@ -45,13 +50,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+        Log.d(LOG_UI, getClass().getName() + ".onCreateViewHolder() called with: parent = ["
+                + parent + "], viewType = [" + viewType + "]");
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem,
+                parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        Log.d(LOG_UI, getClass().getName() + ".onBindViewHolder() called with: holder = ["
+                + holder + "], position = [" + position + "]");
         final Event e = eventsToDisplay.get(position);
 
         holder.day.setText(dayOfWeek.format(e.date).toUpperCase());
@@ -65,6 +75,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(LOG_UI, getClass().getName() + ".onClick() called with: v = ["
+                        + v + "]");
                 e.favorite = !e.favorite;
                 ((ImageButton) v).setImageResource(getFavoriteImageResource(e.favorite));
 
@@ -72,6 +84,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     protected Void doInBackground(Void... voids) {
+                        Log.d(LOG_UI, getClass().getName() +
+                                ".doInBackground() called with: voids = [" + voids + "]");
                         AppDatabase.getInstance(context).eventDao().update(e);
                         return null;
                     }
@@ -83,6 +97,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             @Override
             public void onClick(View v) {
+                Log.d(LOG_UI, getClass().getName() + ".onClick() called with: v = ["
+                        + v + "]");
                 Intent intent = new Intent(context, EventDetailsActivity.class);
                 Bundle b = new Bundle();
                 b.putInt("eventId", e.eventId);
@@ -111,6 +127,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
+            Log.d(LOG_UI, getClass().getName() + ".performFiltering() called with: "
+                    + "constraint = [" + constraint + "]");
             List<Event> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
@@ -138,6 +156,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
+            Log.d(LOG_UI, getClass().getName() + ".publishResults() called with: "
+                    + "constraint = [" + constraint + "], results = [" + results + "]");
             eventsToDisplay.clear();
             eventsToDisplay.addAll((List) results.values);
             notifyDataSetChanged();
@@ -152,6 +172,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            Log.d(LOG_APP, getClass().getName() + " constructed");
+
             day = itemView.findViewById(R.id.day);
             date = itemView.findViewById(R.id.date);
             time = itemView.findViewById(R.id.time);
@@ -164,6 +187,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public void updateEventsToDisplay(List<Event> newList) {
+        Log.d(LOG_UI, getClass().getName() + ".updateEventsToDisplay() called with: "
+                + "newList = [" + newList + "]");
+
         List<Event> newResults;
 
         if (newList != null) {

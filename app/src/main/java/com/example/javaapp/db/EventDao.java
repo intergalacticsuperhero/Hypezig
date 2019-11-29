@@ -8,7 +8,6 @@ import androidx.room.Update;
 
 import com.example.javaapp.models.Event;
 
-import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -34,9 +33,6 @@ public interface EventDao {
 
     @Query("SELECT * FROM event WHERE favorite = 1 AND date >= :date ORDER by date")
     List<Event> getFavorites(long date);
-
-    @Query("SELECT DISTINCT category FROM event")
-    List<String> getDistinctCategories();
 
     @Update
     void update(Event event);

@@ -41,12 +41,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.example.javaapp.BaseApplication.LOG_UI;
+
 
 public class HomeFragment extends Fragment {
-
-
-    private static final String TAG = "HomeFragment";
-
 
     private RecyclerViewAdapter adapter;
 
@@ -70,22 +68,25 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(LOG_UI, getClass().getName() + ".onCreate() called with: savedInstanceState = ["
+                + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-        System.out.println("HomeFragment - onCreate");
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.d(LOG_UI, getClass().getName() + ".onCreateView() called with: inflater = ["
+                + inflater + "], container = [" + container + "], savedInstanceState = ["
+                + savedInstanceState + "]");
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.d(LOG_UI, getClass().getName() + ".onViewCreated() called with: view = [" + view
+                + "], savedInstanceState = [" + savedInstanceState + "]");
         super.onViewCreated(view, savedInstanceState);
-
-        System.out.println("HomeFragment - onViewCreated");
 
         Arrays.sort(categoryLabels);
 
@@ -95,7 +96,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 layout.setRefreshing(true);
-                new ReloadEventsFromInternet(getActivity().getApplicationContext(), layout, adapter).execute();
+                new ReloadEventsFromInternet(getActivity().getApplicationContext(), layout, adapter)
+                        .execute();
             }
         });
 
@@ -104,6 +106,9 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.d(LOG_UI, getClass().getName() + ".onCheckedChanged() called with: "
+                        + "group = [" + group + "], checkedId = [" + checkedId + "]");
+
                 switch (checkedId) {
                     case R.id.radioButtonToday:
                         Model.getInstance().setFilterStrategy(new TodayFilter());
@@ -118,7 +123,7 @@ public class HomeFragment extends Fragment {
                         Model.getInstance().setFilterStrategy(new NextWeekFilter());
                         break;
                     default:
-                        System.out.println("this should never happen");
+                        Log.e(LOG_UI, "onCheckedChanged: invalid option: " + checkedId);
                 }
 
                 adapter.updateEventsToDisplay(Model.getInstance().getFilteredEvents());
@@ -129,11 +134,13 @@ public class HomeFragment extends Fragment {
         ((RadioButton) view.findViewById(R.id.radioButtonToday)).toggle();
         (new ReadEventsFromDatabase(getActivity().getApplicationContext(), adapter)).execute();
 
-        Toast.makeText(getContext(), "Nach unten wischen um neue Events zu laden", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Nach unten wischen um neue Events zu laden",
+                Toast.LENGTH_LONG).show();
     }
 
     private void initRecyclerView(@NonNull View view) {
-        Log.d(TAG, "initRecyclerView: init recyclerview");
+        Log.d(LOG_UI, getClass().getName() + ".initRecyclerView() called with: view = ["
+                + view + "]");
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         adapter = new RecyclerViewAdapter(getActivity(), Model.getInstance().getFilteredEvents());
         recyclerView.setAdapter(adapter);
@@ -142,6 +149,7 @@ public class HomeFragment extends Fragment {
 
 
     private AlertDialog buildCategoriesDialog() {
+        Log.d(LOG_UI, getClass().getName() + ".buildCategoriesDialog() called");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Zeige nur");
@@ -159,6 +167,8 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d(LOG_UI, getClass().getName() + ".onCreateOptionsMenu() called with: menu = ["
+                + menu + "], inflater = [" + inflater + "]");
         inflater.inflate(R.menu.main_menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.item_search);
@@ -182,6 +192,9 @@ public class HomeFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.d(LOG_UI, getClass().getName() + ".onOptionsItemSelected() called with: item = ["
+                + item + "]");
+
         switch (item.getItemId()) {
             case R.id.item_sort:
                 showAlertSortMenu();
@@ -190,25 +203,30 @@ public class HomeFragment extends Fragment {
                 showAlertFilterMenu();
                 break;
             default:
-                System.out.println("this should never happen");
+                Log.e(LOG_UI, "onOptionsItemSelected: invalid option: " + item.getItemId());
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void showAlertSortMenu() {
+        Log.d(LOG_UI, getClass().getName() + ".showAlertSortMenu() called");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Sortieren nach");
         builder.setSingleChoiceItems(queryLabels, queryWhich, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                System.out.println("Ausgewählt: " + queryLabels[which]);
+                Log.d(LOG_UI, getClass().getName() + ".onClick() called with: dialog = ["
+                        + dialog + "], which = [" + which + "]");
+                Log.i(LOG_UI, "onClick: chosen: " + queryLabels[which]);
+
                 queryWhich = which;
                 Model.getInstance().setQueryStrategy(queryStrategies[which]);
                 dialog.dismiss();
 
-                (new ReadEventsFromDatabase(getActivity().getApplicationContext(), adapter)).execute();
+                (new ReadEventsFromDatabase(getActivity().getApplicationContext(), adapter))
+                        .execute();
             }
         });
         builder.setNeutralButton("Abbrechen", new DialogInterface.OnClickListener() {
@@ -222,6 +240,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void showAlertFilterMenu() {
+        Log.d(LOG_UI, getClass().getName() + ".showAlertFilterMenu() called");
         if (categoriesDialog == null) {
             categoriesDialog = buildCategoriesDialog();
         }
@@ -282,6 +301,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void applySearchFilter() {
+        Log.d(LOG_UI, getClass().getName() + ".applySearchFilter() called");
         adapter.getFilter().filter(searchView.getQuery());
     }
 

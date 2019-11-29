@@ -1,5 +1,7 @@
 package com.example.javaapp.models;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -15,6 +17,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.javaapp.BaseApplication.LOG_APP;
 
 @Entity
 @TypeConverters({DateConverter.class, StringListConverter.class})
@@ -42,6 +46,8 @@ public class Event {
     public Event(String title, String subtitle, String details, Date date, String locationName,
                  List<String> tags, String imageURL, String category,
                  String providerName, String providerId, String providerCategory) {
+        Log.v(LOG_APP, getClass().getName() + " constructed");
+
         this.title = title;
         this.subtitle = subtitle;
         this.details = details;
@@ -59,6 +65,8 @@ public class Event {
     @NonNull
     @Override
     public String toString() {
+        Log.v(LOG_APP, getClass().getName() + ".toString() called");
+
         Map<String, String> localValues = new HashMap<>();
 
         localValues.put("title", title);

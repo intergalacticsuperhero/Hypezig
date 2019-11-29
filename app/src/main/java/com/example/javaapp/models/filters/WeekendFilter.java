@@ -1,42 +1,46 @@
 package com.example.javaapp.models.filters;
 
+import android.util.Log;
+
 import com.example.javaapp.models.Event;
 
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjuster;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import static java.time.temporal.TemporalAdjusters.next;
-import static java.util.Calendar.MONDAY;
-import static java.util.Calendar.SUNDAY;
+import static com.example.javaapp.BaseApplication.LOG_APP;
 
 public class WeekendFilter implements FilterStrategy {
 
-    private final List<Integer> WEEKEND_DAYS = Arrays.asList(Calendar.FRIDAY, Calendar.SATURDAY, SUNDAY);
+    private final List<Integer> WEEKEND_DAYS = Arrays.asList(Calendar.FRIDAY,
+            Calendar.SATURDAY, Calendar.SUNDAY);
 
     @Override
     public void applyFilter(List<Event> input, List<Event> output) {
+        Log.d(LOG_APP, getClass().getName() + ".applyFilter() called with: input = ["
+                + input.size() + "], output = [" + output.size() + "]");
+
         Calendar forCalendar = Calendar.getInstance();
         Calendar nextMonday = nextMonday();
 
         for (Event e : input) {
             forCalendar.setTime(e.date);
 
-            if (forCalendar.before(nextMonday) && WEEKEND_DAYS.contains(forCalendar.get(Calendar.DAY_OF_WEEK))) {
+            if (forCalendar.before(nextMonday) && WEEKEND_DAYS.contains(
+                    forCalendar.get(Calendar.DAY_OF_WEEK))) {
                 output.add(e);
             }
         }
     }
 
     private Calendar nextMonday() {
+        Log.d(LOG_APP, getClass().getName() + ".nextMonday() called");
+
         Calendar c = Calendar.getInstance();
 
         do {
             c.add(Calendar.DAY_OF_WEEK, 1);
-        } while (c.get(Calendar.DAY_OF_WEEK) != MONDAY);
+        } while (c.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY);
 
         return c;
     }
