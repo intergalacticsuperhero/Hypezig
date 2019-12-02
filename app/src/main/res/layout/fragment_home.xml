@@ -24,25 +24,25 @@
                 android:id="@+id/radioButtonToday"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Heute" />
+                android:text="@string/date_selector_today" />
 
             <RadioButton
                 android:id="@+id/radioButtonWeekend"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Fr-So" />
+                android:text="@string/date_selector_weekend" />
 
             <RadioButton
                 android:id="@+id/radioButtonNextWeek"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="Woche" />
+                android:text="@string/date_selector_week" />
 
             <RadioButton
                 android:id="@+id/radioButtonEverything"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="danach" />
+                android:text="@string/date_selector_next_week" />
         </RadioGroup>
 
 

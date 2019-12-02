@@ -35,8 +35,8 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.d(LOG_UI, getClass().getSimpleName() + ".onViewCreated() called with: view = [" + view
-                + "], savedInstanceState = [" + savedInstanceState + "]");
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onViewCreated() called with: view = ["
+                + view + "], savedInstanceState = [" + savedInstanceState + "]");
 
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);

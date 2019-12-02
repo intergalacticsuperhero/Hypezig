@@ -53,7 +53,8 @@ public class HomeFragment extends Fragment {
 
     private SearchView searchView;
 
-    String[] queryLabels = new String[]{"Zeit", "Name", "Kategorie", "Ort"};
+    String[] queryLabels = null;
+
     QueryStrategy[] queryStrategies = new QueryStrategy[]{
             new SortByDate(),
             new SortByName(),
@@ -62,10 +63,7 @@ public class HomeFragment extends Fragment {
     };
     int queryWhich = 0;
 
-    String[] categoryLabels = new String[]{"Theater", "Kino", "Show", "Party", "Musik",
-            "Clubbing", "Tanzen", "Kunst", "Literatur", "Vorträge & Diskussionen", "etc.",
-            "Kinder & Familie", "Umland", "Gastro-Events", "Lokale Radios", "Natur & Umwelt"};
-
+    String[] categoryLabels = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +71,9 @@ public class HomeFragment extends Fragment {
                 + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        initQueryLabels();
+        initCategoryLabels();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -135,7 +136,7 @@ public class HomeFragment extends Fragment {
         ((RadioButton) view.findViewById(R.id.radioButtonToday)).toggle();
         (new ReadEventsFromDatabase(getActivity().getApplicationContext(), adapter)).execute();
 
-        Toast.makeText(getContext(), "Nach unten wischen um neue Events zu laden",
+        Toast.makeText(getContext(), R.string.home_swipe_to_refresh,
                 Toast.LENGTH_LONG).show();
     }
 
@@ -153,15 +154,15 @@ public class HomeFragment extends Fragment {
         Log.d(LOG_UI, getClass().getSimpleName() + ".buildCategoriesDialog() called");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Zeige nur");
+        builder.setTitle(R.string.category_filter_show_only);
         builder.setMultiChoiceItems(categoryLabels, null, null);
-        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.category_filter_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        builder.setNeutralButton("Alle", null);
-        builder.setPositiveButton("OK", null);
+        builder.setNeutralButton(R.string.category_filter_all, null);
+        builder.setPositiveButton(R.string.category_filter_okay, null);
 
         return builder.create();
     }
@@ -214,7 +215,7 @@ public class HomeFragment extends Fragment {
         Log.d(LOG_UI, getClass().getSimpleName() + ".showAlertSortMenu() called");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Sortieren nach");
+        builder.setTitle(R.string.sorting_action_title);
         builder.setSingleChoiceItems(queryLabels, queryWhich, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -230,7 +231,8 @@ public class HomeFragment extends Fragment {
                         .execute();
             }
         });
-        builder.setNeutralButton("Abbrechen", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(getString(R.string.sorting_action_cancel),
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -306,4 +308,35 @@ public class HomeFragment extends Fragment {
         adapter.getFilter().filter(searchView.getQuery());
     }
 
+    private void initQueryLabels() {
+        Log.d(LOG_UI, getClass().getSimpleName() + ".initQueryLabels() called");
+
+        queryLabels = new String[]{
+                getString(R.string.query_label_time),
+                getString(R.string.query_label_name),
+                getString(R.string.query_label_category),
+                getString(R.string.query_label_location)};
+    }
+
+    private void initCategoryLabels() {
+        Log.d(LOG_UI, getClass().getSimpleName() + ".initQueryLabels() called");
+
+        categoryLabels =  new String[]{
+                getString(R.string.category_label_theatre),
+                getString(R.string.category_label_cinema),
+                getString(R.string.category_label_show),
+                getString(R.string.category_label_party),
+                getString(R.string.category_label_music),
+                getString(R.string.category_label_clubbing),
+                getString(R.string.category_label_dancing),
+                getString(R.string.category_label_arts),
+                getString(R.string.category_label_literature),
+                getString(R.string.category_label_talks),
+                getString(R.string.category_label_other),
+                getString(R.string.category_label_family),
+                getString(R.string.category_label_environs),
+                getString(R.string.category_label_gastronomy),
+                getString(R.string.category_label_radio),
+                getString(R.string.category_label_nature)};
+    }
 }

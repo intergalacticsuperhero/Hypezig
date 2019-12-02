@@ -84,7 +84,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 + event.locationName.toUpperCase() + "</a>"));
         location.setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.details)).setText(event.details);
-        ((TextView) findViewById(R.id.providerName)).setText("Quelle: " + event.providerName);
+        ((TextView) findViewById(R.id.providerName)).setText(String.format("%s: %s",
+                getResources().getString(R.string.event_details_source), event.providerName));
 
         if (event.imageURL != null) {
             new DownloadImageTask((ImageView) findViewById(R.id.imageView)).execute(event.imageURL);
@@ -156,11 +157,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         Log.d(LOG_UI, getClass().getSimpleName() + ".shareEvent() called");
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String shareBody = "Ich habe folgendes Event entdeckt: "
-                + event.title + " am " + dateFormat.format(event.date)
-                + " @ " + event.locationName;
+        String shareBody = String.format(getResources().getString(R.string.share_action_message),
+                event.title, dateFormat.format(event.date), event.locationName);
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, event.title);
         sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, "Teilen ..."));
+        startActivity(Intent.createChooser(sharingIntent,
+                getResources().getString(R.string.share_action_title)));
     }
 }

@@ -34,14 +34,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
-                        android:text="Kategorie" />
+                        android:text="@string/event_details_category" />
 
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
-                        android:text="Titel der Veranstaltung"
+                        android:text="@string/event_details_title"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         />
@@ -51,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
-                        android:text="Untertitel"
+                        android:text="@string/event_details_subtitle"
                         app:layout_constraintEnd_toEndOf="parent"
                         />
 
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="Tag, dd.mm.yyyy, Uhrzeit"
+                android:text="@string/event_details_date"
                 android:textStyle="bold"
                  />
 
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="VERANSTALTUNGSORT"
+                android:text="@string/event_details_location"
                 />
 
             <TextView
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="Details"
+                android:text="@string/event_details_further_info"
                 />
 
             <ImageView
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="Quelle"/>
+                android:text="@string/event_details_source"/>
         </LinearLayout>
 
     </ScrollView>
