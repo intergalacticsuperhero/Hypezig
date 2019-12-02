@@ -17,7 +17,7 @@ public class WeekendFilter implements FilterStrategy {
 
     @Override
     public void applyFilter(List<Event> input, List<Event> output) {
-        Log.d(LOG_APP, getClass().getName() + ".applyFilter() called with: input = ["
+        Log.d(LOG_APP, getClass().getSimpleName() + ".applyFilter() called with: input = ["
                 + input.size() + "], output = [" + output.size() + "]");
 
         Calendar forCalendar = Calendar.getInstance();
@@ -34,7 +34,7 @@ public class WeekendFilter implements FilterStrategy {
     }
 
     private Calendar nextMonday() {
-        Log.d(LOG_APP, getClass().getName() + ".nextMonday() called");
+        Log.d(LOG_APP, getClass().getSimpleName() + ".nextMonday() called");
 
         Calendar c = Calendar.getInstance();
 

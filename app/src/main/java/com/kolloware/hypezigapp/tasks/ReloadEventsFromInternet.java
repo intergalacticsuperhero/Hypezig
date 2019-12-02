@@ -1,6 +1,7 @@
 package com.kolloware.hypezigapp.tasks;
 
 import android.content.Context;
+import android.net.TrafficStats;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,6 +17,7 @@ import static com.kolloware.hypezigapp.BaseApplication.LOG_APP;
 import static com.kolloware.hypezigapp.BaseApplication.LOG_NET;
 
 public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
+    private static final int THREAD_ID = 20000;
 
     private Context context;
     private SwipeRefreshLayout layout;
@@ -23,7 +25,7 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
 
     public ReloadEventsFromInternet(Context context, SwipeRefreshLayout layout,
                                     RecyclerViewAdapter adapter) {
-        Log.d(LOG_APP, getClass().getName() + " constructed");
+        Log.d(LOG_APP, getClass().getSimpleName() + " constructed");
         this.context = context;
         this.layout = layout;
         this.adapter = adapter;
@@ -31,10 +33,12 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        Log.d(LOG_NET, getClass().getName() + ".doInBackground() called with: voids = ["
+        Log.d(LOG_NET, getClass().getSimpleName() + ".doInBackground() called with: voids = ["
                 + voids + "]");
 
         try {
+            TrafficStats.setThreadStatsTag(THREAD_ID);
+
             // Scrape information from website
             ScrapingResult localResult = KreuzerScraper.fetchEvents();
 
@@ -60,7 +64,7 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
             }
         }
         catch(Exception e) {
-            Log.e(LOG_NET, getClass().getName() + ".doInBackground: ", e);
+            Log.e(LOG_NET, getClass().getSimpleName() + ".doInBackground: ", e);
         }
 
         return null;
@@ -68,7 +72,7 @@ public class ReloadEventsFromInternet extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        Log.d(LOG_NET, getClass().getName() + ".onPostExecute() called with: aVoid = ["
+        Log.d(LOG_NET, getClass().getSimpleName() + ".onPostExecute() called with: aVoid = ["
                 + aVoid + "]");
 
         super.onPostExecute(aVoid);

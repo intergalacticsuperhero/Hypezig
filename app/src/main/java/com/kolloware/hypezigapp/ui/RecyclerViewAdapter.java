@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     public RecyclerViewAdapter(Context context, List<Event> dataSource) {
-        Log.d(LOG_APP, getClass().getName() + " constructed");
+        Log.d(LOG_APP, getClass().getSimpleName() + " constructed");
 
         this.context = context;
         this.dataSource = dataSource;
@@ -52,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(LOG_UI, getClass().getName() + ".onCreateViewHolder() called with: parent = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onCreateViewHolder() called with: parent = ["
                 + parent + "], viewType = [" + viewType + "]");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem,
                 parent, false);
@@ -62,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Log.d(LOG_UI, getClass().getName() + ".onBindViewHolder() called with: holder = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onBindViewHolder() called with: holder = ["
                 + holder + "], position = [" + position + "]");
         final Event e = eventsToDisplay.get(position);
 
@@ -77,7 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(LOG_UI, getClass().getName() + ".onClick() called with: v = ["
+                Log.d(LOG_UI, getClass().getSimpleName() + ".onClick() called with: v = ["
                         + v + "]");
                 e.favorite = !e.favorite;
                 ((ImageButton) v).setImageResource(getFavoriteImageResource(e.favorite));
@@ -86,7 +86,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     protected Void doInBackground(Void... voids) {
-                        Log.d(LOG_UI, getClass().getName() +
+                        Log.d(LOG_UI, getClass().getSimpleName() +
                                 ".doInBackground() called with: voids = [" + voids + "]");
                         AppDatabase.getInstance(context).eventDao().update(e);
                         return null;
@@ -99,7 +99,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             @Override
             public void onClick(View v) {
-                Log.d(LOG_UI, getClass().getName() + ".onClick() called with: v = ["
+                Log.d(LOG_UI, getClass().getSimpleName() + ".onClick() called with: v = ["
                         + v + "]");
                 Intent intent = new Intent(context, EventDetailsActivity.class);
                 Bundle b = new Bundle();
@@ -129,7 +129,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            Log.d(LOG_UI, getClass().getName() + ".performFiltering() called with: "
+            Log.d(LOG_UI, getClass().getSimpleName() + ".performFiltering() called with: "
                     + "constraint = [" + constraint + "]");
             List<Event> filteredList = new ArrayList<>();
 
@@ -158,7 +158,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            Log.d(LOG_UI, getClass().getName() + ".publishResults() called with: "
+            Log.d(LOG_UI, getClass().getSimpleName() + ".publishResults() called with: "
                     + "constraint = [" + constraint + "], results = [" + results + "]");
             eventsToDisplay.clear();
             eventsToDisplay.addAll((List) results.values);
@@ -175,7 +175,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            Log.d(LOG_APP, getClass().getName() + " constructed");
+            Log.d(LOG_APP, getClass().getSimpleName() + " constructed");
 
             day = itemView.findViewById(R.id.day);
             date = itemView.findViewById(R.id.date);
@@ -189,7 +189,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public void updateEventsToDisplay(List<Event> newList) {
-        Log.d(LOG_UI, getClass().getName() + ".updateEventsToDisplay() called with: "
+        Log.d(LOG_UI, getClass().getSimpleName() + ".updateEventsToDisplay() called with: "
                 + "newList = [" + newList + "]");
 
         List<Event> newResults;

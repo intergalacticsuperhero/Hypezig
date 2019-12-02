@@ -14,7 +14,7 @@ import static com.kolloware.hypezigapp.BaseApplication.LOG_DATA;
 public class SelectFavorites implements QueryStrategy {
     @Override
     public List<Event> getSortedData(Context context) {
-        Log.d(LOG_DATA, getClass().getName() + ".getSortedData() called with: context = [" + context + "]");
+        Log.d(LOG_DATA, getClass().getSimpleName() + ".getSortedData() called with: context = [" + context + "]");
         return AppDatabase.getInstance(context).eventDao().getFavorites((new Date()).getTime() - 2 * 60 * 60 * 1000);
     }
 }

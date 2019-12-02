@@ -25,7 +25,7 @@ public class FavoritesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Log.d(LOG_UI, getClass().getName() + ".onCreateView() called with: inflater = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onCreateView() called with: inflater = ["
                 + inflater + "], container = [" + container + "], savedInstanceState = ["
                 + savedInstanceState + "]");
 
@@ -35,7 +35,7 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.d(LOG_UI, getClass().getName() + ".onViewCreated() called with: view = [" + view
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onViewCreated() called with: view = [" + view
                 + "], savedInstanceState = [" + savedInstanceState + "]");
 
         super.onViewCreated(view, savedInstanceState);
@@ -45,7 +45,7 @@ public class FavoritesFragment extends Fragment {
     }
 
     private void initRecyclerView(@NonNull View view) {
-        Log.d(LOG_UI, getClass().getName() + ".initRecyclerView() called with: view = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".initRecyclerView() called with: view = ["
                 + view + "]");
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewFavorites);
         adapter = new RecyclerViewAdapter(getActivity(), Model.getInstance().getFavorites());

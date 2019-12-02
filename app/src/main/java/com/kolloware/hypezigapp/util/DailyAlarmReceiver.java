@@ -31,7 +31,7 @@ public class DailyAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(LOG_APP, getClass().getName() + ".onReceive() called with: context = ["
+        Log.d(LOG_APP, getClass().getSimpleName() + ".onReceive() called with: context = ["
                 + context + "], intent = [" + intent + "]");
         Log.i(LOG_APP, "onReceive: was called at " + new Date());
 
@@ -54,7 +54,7 @@ public class DailyAlarmReceiver extends BroadcastReceiver {
 
 
     private void notifyFavorite(Context context, Event event, int notificationType) {
-        Log.d(LOG_APP, getClass().getName() + ".DailyAlarmReceiver.notifyFavorite() called "
+        Log.d(LOG_APP, getClass().getSimpleName() + ".DailyAlarmReceiver.notifyFavorite() called "
                 + "with: context = [" + context + "], event = [" + event + "], notificationType = ["
                 + notificationType + "]");
 

@@ -43,6 +43,8 @@ public class BaseApplication extends Application {
     public static final String LOG_APP = "APP";
 
 
+    private static final int REQUEST_TIMER_DAILY = 1;
+
     @Override
     public void onCreate() {
         Log.d(LOG_APP, "BaseApplication.onCreate() called");
@@ -102,7 +104,7 @@ public class BaseApplication extends Application {
 
 
     private void createNotificationChannels() {
-        Log.d(LOG_APP, getClass().getName() + ".createNotificationChannels() called");
+        Log.d(LOG_APP, getClass().getSimpleName() + ".createNotificationChannels() called");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
@@ -119,14 +121,13 @@ public class BaseApplication extends Application {
 
 
     private void initAlarmReceiver() {
-        Log.d(LOG_APP, getClass().getName() + ".initAlarmReceiver() called");
+        Log.d(LOG_APP, getClass().getSimpleName() + ".initAlarmReceiver() called");
 
         AlarmManager manager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, DailyAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                0, intent, 0);
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                (new Date()).getTime() + 1000 * 60,
+                REQUEST_TIMER_DAILY, intent, 0);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
                 AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }

@@ -11,7 +11,7 @@ public class ScrapingResult {
     List<Event> events;
 
     public ScrapingResult(List<Event> events) {
-        Log.d(LOG_NET, getClass().getName() + " constructed");
+        Log.d(LOG_NET, getClass().getSimpleName() + " constructed");
 
         this.events = events;
     }

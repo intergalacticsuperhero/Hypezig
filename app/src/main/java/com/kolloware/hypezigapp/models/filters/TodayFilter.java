@@ -15,7 +15,7 @@ public class TodayFilter implements FilterStrategy {
 
     @Override
     public void applyFilter(List<Event> input, List<Event> output) {
-        Log.d(LOG_APP, getClass().getName() + ".applyFilter() called with: input = ["
+        Log.d(LOG_APP, getClass().getSimpleName() + ".applyFilter() called with: input = ["
                 + input.size() + "], output = [" + output.size() + "]");
 
         output.clear();

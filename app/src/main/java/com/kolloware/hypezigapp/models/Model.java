@@ -26,7 +26,7 @@ public class Model {
     private CategoryFilter categoryFilter = new CategoryFilter();
 
     private Model() {
-        Log.d(LOG_APP, getClass().getName() + " constructed");
+        Log.d(LOG_APP, getClass().getSimpleName() + " constructed");
     }
 
     public static Model getInstance() {
@@ -37,7 +37,7 @@ public class Model {
     }
 
     public void applyFilter() {
-        Log.d(LOG_APP, getClass().getName() + ".applyFilter() called");
+        Log.d(LOG_APP, getClass().getSimpleName() + ".applyFilter() called");
 
         List<Event> localResult = new ArrayList<>();
         filterStrategy.applyFilter(orderedEvents, localResult);
@@ -63,13 +63,13 @@ public class Model {
     }
 
     public void setQueryStrategy(QueryStrategy queryStrategy) {
-        Log.d(LOG_APP, getClass().getName() + ".setQueryStrategy() called");
+        Log.d(LOG_APP, getClass().getSimpleName() + ".setQueryStrategy() called");
 
         this.queryStrategy = queryStrategy;
     }
 
     public void setFilterStrategy(FilterStrategy filterStrategy) {
-        Log.d(LOG_APP, getClass().getName() + ".setFilterStrategy() called");
+        Log.d(LOG_APP, getClass().getSimpleName() + ".setFilterStrategy() called");
 
         this.filterStrategy = filterStrategy;
         applyFilter();

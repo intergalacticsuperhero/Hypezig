@@ -15,7 +15,7 @@ public class SortByName implements QueryStrategy {
 
     @Override
     public List<Event> getSortedData(Context context) {
-        Log.d(LOG_DATA, getClass().getName() + "..getSortedData() called with: context = ["
+        Log.d(LOG_DATA, getClass().getSimpleName() + "..getSortedData() called with: context = ["
                 + context + "]");
         return AppDatabase.getInstance(context).eventDao().getCurrentEventsOrderedByTitle(
                 (new Date()).getTime() - 2 * 60 * 60 * 1000);

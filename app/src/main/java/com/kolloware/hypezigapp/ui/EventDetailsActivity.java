@@ -3,6 +3,7 @@ package com.kolloware.hypezigapp.ui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.TrafficStats;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -36,7 +37,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(LOG_UI, getClass().getName() + ".onCreate() called with: savedInstanceState = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onCreate() called with: savedInstanceState = ["
                 + savedInstanceState + "]");
 
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(LOG_UI, getClass().getName() + ".onOptionsItemSelected() called with: item = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onOptionsItemSelected() called with: item = ["
                 + item + "]");
 
         switch (item.getItemId()) {
@@ -70,7 +71,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     private void updateViews() {
-        Log.d(LOG_UI, getClass().getName() + ".updateViews() called");
+        Log.d(LOG_UI, getClass().getSimpleName() + ".updateViews() called");
 
         if (event == null) return;
 
@@ -94,7 +95,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d(LOG_DATA, getClass().getName() + ".doInBackground() called with: voids = ["
+            Log.d(LOG_DATA, getClass().getSimpleName() + ".doInBackground() called with: voids = ["
                     + voids + "]");
             event = AppDatabase.getInstance(getApplicationContext()).eventDao()
                     .getByEventId(eventId);
@@ -103,27 +104,30 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            Log.d(LOG_DATA, getClass().getName() + ".onPostExecute() called with: result = ["
+            Log.d(LOG_DATA, getClass().getSimpleName() + ".onPostExecute() called with: result = ["
                     + result + "]");
             updateViews();
         }
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        private static final int THREAD_ID = 10000;
+
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {
-            Log.d(LOG_NET, getClass().getName() + " constructed");
+            Log.d(LOG_NET, getClass().getSimpleName() + " constructed");
 
             this.bmImage = bmImage;
         }
 
         protected Bitmap doInBackground(String... urls) {
-            Log.d(LOG_NET, getClass().getName() + ".doInBackground: called with urls: "
+            Log.d(LOG_NET, getClass().getSimpleName() + ".doInBackground: called with urls: "
                     + urls.toString());
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
             try {
+                TrafficStats.setThreadStatsTag(THREAD_ID);
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
@@ -133,7 +137,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
-            Log.d(LOG_NET, getClass().getName() + ".onPostExecute() called with: result = ["
+            Log.d(LOG_NET, getClass().getSimpleName() + ".onPostExecute() called with: result = ["
                     + result + "]");
             bmImage.setImageBitmap(result);
         }
@@ -141,7 +145,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d(LOG_UI, getClass().getName() + ".onCreateOptionsMenu() called with: menu = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onCreateOptionsMenu() called with: menu = ["
                 + menu + "]");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.detail_menu, menu);
@@ -149,7 +153,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     private void shareEvent() {
-        Log.d(LOG_UI, getClass().getName() + ".shareEvent() called");
+        Log.d(LOG_UI, getClass().getSimpleName() + ".shareEvent() called");
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Ich habe folgendes Event entdeckt: "

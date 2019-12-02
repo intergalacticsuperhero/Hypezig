@@ -21,14 +21,14 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
 
     public ReadEventsFromDatabase(Context context, RecyclerViewAdapter adapter) {
-        Log.d(LOG_APP, getClass().getName() + " constructed");
+        Log.d(LOG_APP, getClass().getSimpleName() + " constructed");
         this.context = context;
         this.adapter = adapter;
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-        Log.d(LOG_DATA, getClass().getName() + ".doInBackground() called with: voids = ["
+        Log.d(LOG_DATA, getClass().getSimpleName() + ".doInBackground() called with: voids = ["
                 + voids + "]");
 
         // Read events from database
@@ -36,9 +36,9 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
                 .getQueryStrategy().getSortedData(context);
         List<Event> newFavorites = (new SelectFavorites()).getSortedData(context);
 
-        Log.i(LOG_DATA, getClass().getName() + " " + eventsFromDatabase.size()
+        Log.i(LOG_DATA, getClass().getSimpleName() + " " + eventsFromDatabase.size()
                 + " events were read from database");
-        Log.i(LOG_DATA, getClass().getName() + " " + newFavorites.size()
+        Log.i(LOG_DATA, getClass().getSimpleName() + " " + newFavorites.size()
                 + " favorite events were read from database");
 
         // Update events in model
@@ -57,7 +57,7 @@ public class ReadEventsFromDatabase extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        Log.d(LOG_DATA, getClass().getName() + ".onPostExecute() called with: aVoid = ["
+        Log.d(LOG_DATA, getClass().getSimpleName() + ".onPostExecute() called with: aVoid = ["
                 + aVoid + "]");
 
         adapter.updateEventsToDisplay(null);

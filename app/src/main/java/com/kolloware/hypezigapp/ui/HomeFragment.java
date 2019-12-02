@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(LOG_UI, getClass().getName() + ".onCreate() called with: savedInstanceState = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onCreate() called with: savedInstanceState = ["
                 + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Log.d(LOG_UI, getClass().getName() + ".onCreateView() called with: inflater = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onCreateView() called with: inflater = ["
                 + inflater + "], container = [" + container + "], savedInstanceState = ["
                 + savedInstanceState + "]");
         return inflater.inflate(R.layout.fragment_home, container, false);
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.d(LOG_UI, getClass().getName() + ".onViewCreated() called with: view = [" + view
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onViewCreated() called with: view = [" + view
                 + "], savedInstanceState = [" + savedInstanceState + "]");
         super.onViewCreated(view, savedInstanceState);
 
@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d(LOG_UI, getClass().getName() + ".onCheckedChanged() called with: "
+                Log.d(LOG_UI, getClass().getSimpleName() + ".onCheckedChanged() called with: "
                         + "group = [" + group + "], checkedId = [" + checkedId + "]");
 
                 switch (checkedId) {
@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initRecyclerView(@NonNull View view) {
-        Log.d(LOG_UI, getClass().getName() + ".initRecyclerView() called with: view = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".initRecyclerView() called with: view = ["
                 + view + "]");
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         adapter = new RecyclerViewAdapter(getActivity(), Model.getInstance().getFilteredEvents());
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
 
 
     private AlertDialog buildCategoriesDialog() {
-        Log.d(LOG_UI, getClass().getName() + ".buildCategoriesDialog() called");
+        Log.d(LOG_UI, getClass().getSimpleName() + ".buildCategoriesDialog() called");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Zeige nur");
@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        Log.d(LOG_UI, getClass().getName() + ".onCreateOptionsMenu() called with: menu = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onCreateOptionsMenu() called with: menu = ["
                 + menu + "], inflater = [" + inflater + "]");
         inflater.inflate(R.menu.main_menu, menu);
 
@@ -193,7 +193,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Log.d(LOG_UI, getClass().getName() + ".onOptionsItemSelected() called with: item = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onOptionsItemSelected() called with: item = ["
                 + item + "]");
 
         switch (item.getItemId()) {
@@ -211,14 +211,14 @@ public class HomeFragment extends Fragment {
     }
 
     private void showAlertSortMenu() {
-        Log.d(LOG_UI, getClass().getName() + ".showAlertSortMenu() called");
+        Log.d(LOG_UI, getClass().getSimpleName() + ".showAlertSortMenu() called");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Sortieren nach");
         builder.setSingleChoiceItems(queryLabels, queryWhich, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d(LOG_UI, getClass().getName() + ".onClick() called with: dialog = ["
+                Log.d(LOG_UI, getClass().getSimpleName() + ".onClick() called with: dialog = ["
                         + dialog + "], which = [" + which + "]");
                 Log.i(LOG_UI, "onClick: chosen: " + queryLabels[which]);
 
@@ -241,7 +241,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void showAlertFilterMenu() {
-        Log.d(LOG_UI, getClass().getName() + ".showAlertFilterMenu() called");
+        Log.d(LOG_UI, getClass().getSimpleName() + ".showAlertFilterMenu() called");
         if (categoriesDialog == null) {
             categoriesDialog = buildCategoriesDialog();
         }
@@ -302,7 +302,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void applySearchFilter() {
-        Log.d(LOG_UI, getClass().getName() + ".applySearchFilter() called");
+        Log.d(LOG_UI, getClass().getSimpleName() + ".applySearchFilter() called");
         adapter.getFilter().filter(searchView.getQuery());
     }
 

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(LOG_UI, getClass().getName() + ".onCreate() called with: savedInstanceState = ["
+        Log.d(LOG_UI, getClass().getSimpleName() + ".onCreate() called with: savedInstanceState = ["
                 + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

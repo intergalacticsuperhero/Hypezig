@@ -43,7 +43,7 @@ public class Event {
     public Event(String title, String subtitle, String details, Date date, String locationName,
                  List<String> tags, String imageURL, String category,
                  String providerName, String providerId, String providerCategory) {
-        Log.v(LOG_APP, getClass().getName() + " constructed");
+        Log.v(LOG_APP, getClass().getSimpleName() + " constructed");
 
         this.title = title;
         this.subtitle = subtitle;
@@ -62,7 +62,7 @@ public class Event {
     @NonNull
     @Override
     public String toString() {
-        Log.v(LOG_APP, getClass().getName() + ".toString() called");
+        Log.v(LOG_APP, getClass().getSimpleName() + ".toString() called");
 
         Map<String, String> localValues = new HashMap<>();
 
