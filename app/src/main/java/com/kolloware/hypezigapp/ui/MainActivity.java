@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 homeFragment).commit();
 
+        setTitle("HYPEZIG");
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
